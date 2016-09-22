@@ -1,0 +1,8 @@
+import com.mbenabda.techwatch.testES.facts.AlwaysTrue
+
+rule "Always true"
+    when
+        v: AlwaysTrue(value == true)
+    then
+      // do nothing
+end

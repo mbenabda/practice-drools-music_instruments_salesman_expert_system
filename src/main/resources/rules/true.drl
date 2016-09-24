@@ -1,8 +1,8 @@
-import com.mbenabda.techwatch.testES.facts.AlwaysTrue
+import com.mbenabda.techwatch.testES.facts.RuleFired
 
 rule "Always true"
     when
-        v: AlwaysTrue(value == true)
+        eval(true)
     then
-      // do nothing
+        insert(new RuleFired());
 end

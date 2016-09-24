@@ -1,0 +1,11 @@
+<kmodule xmlns="http://jboss.org/kie/6.0.0/kmodule"  >
+    <kbase name="kbase-test" packages="rules" default="true">
+        <ksession name="ksession-test" type="stateful" default="true">
+            <consoleLogger/>
+            <listeners>
+                <ruleRuntimeEventListener type="org.kie.api.event.rule.DebugRuleRuntimeEventListener"/>
+                <agendaEventListener type="org.kie.api.event.rule.DebugAgendaEventListener"/>
+            </listeners>
+        </ksession>
+    </kbase>
+</kmodule>

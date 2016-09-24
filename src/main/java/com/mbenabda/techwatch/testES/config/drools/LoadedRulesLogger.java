@@ -1,29 +1,21 @@
 package com.mbenabda.techwatch.testES.config.drools;
 
 import org.kie.api.KieBase;
-import org.kie.api.runtime.KieContainer;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
 public class LoadedRulesLogger {
+    private static final Logger LOG = LoggerFactory.getLogger(LoadedRulesLogger.class);
 
-    public void logRulesLoadedIn(KieContainer container, Logger logger) {
-        container.getKieBaseNames().stream()
-            .map(container::getKieBase)
-            .forEachOrdered(kieBase -> {
-                logRulesLoadedIn(kieBase, logger);
-            });
-    }
-
-    private void logRulesLoadedIn(KieBase kieBase, Logger log) {
+    public void logRulesLoadedIn(KieBase kieBase) {
         List<String> rules = kieBase.getKiePackages().stream()
-            .map(p -> p.getRules())
-            .flatMap(r -> r.stream())
+            .flatMap(p -> p.getRules().stream())
             .map(r -> r.getName())
             .collect(toList());
-        log.info("Loaded rules : " + String.join("\n", rules) + "\n\n");
+        LOG.info("loaded rules : {}\n\n", String.join("\n", rules));
     }
 }

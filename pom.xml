@@ -256,7 +256,6 @@
             <version>${assertj-core.version}</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.drools</groupId>
             <artifactId>drools-compiler</artifactId>
@@ -267,6 +266,7 @@
             <artifactId>drools-core</artifactId>
             <version>${drools.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-envers</artifactId>
@@ -280,16 +280,7 @@
             <artifactId>kie-api</artifactId>
             <version>${drools.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.kie</groupId>
-            <artifactId>kie-ci</artifactId>
-            <version>${drools.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.kie</groupId>
-            <artifactId>kie-spring</artifactId>
-            <version>${drools.version}</version>
-        </dependency>
+
         <!-- jhipster-needle-maven-add-dependency -->
         <dependency>
             <groupId>org.liquibase</groupId>
@@ -641,6 +632,12 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.kie</groupId>
+                <artifactId>kie-maven-plugin</artifactId>
+                <version>${drools.version}</version>
+                <extensions>true</extensions>
             </plugin>
             <plugin>
                 <groupId>org.liquibase</groupId>

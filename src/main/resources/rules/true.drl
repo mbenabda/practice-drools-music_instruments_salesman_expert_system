@@ -1,8 +1,0 @@
-import com.mbenabda.techwatch.testES.facts.RuleFired
-
-rule "Always true"
-    when
-        eval(true)
-    then
-        insert(new RuleFired());
-end

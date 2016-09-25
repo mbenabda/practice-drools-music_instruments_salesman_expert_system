@@ -1,18 +1,18 @@
+import com.mbenabda.techwatch.testES.facts.answers.Age
 import com.mbenabda.techwatch.testES.facts.age.*
-import com.mbenabda.techwatch.testES.facts.Person
 
-rule "underage"
+rule "person is young"
 when
-    YouthLimitAge( $majority : value)
-    Person(age <= $majority)
+    YouthLimitAge( $limit : value)
+    Age(value <= $limit)
 then
     insert(new IsYoung());
 end
 
-rule "major"
+rule "person is old"
 when
-    YouthLimitAge( $majority : value)
-    Person(age > $majority)
+    YouthLimitAge( $limit : value)
+    Age(value > $limit)
 then
     insert(new IsOld());
 end

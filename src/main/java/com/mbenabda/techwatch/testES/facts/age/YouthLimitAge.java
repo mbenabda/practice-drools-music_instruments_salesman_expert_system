@@ -4,17 +4,13 @@ import java.util.Objects;
 
 public class YouthLimitAge {
 
-    private final short value;
+    private final int value;
 
-    public YouthLimitAge(short value) {
+    public YouthLimitAge(int value) {
         this.value = value;
     }
 
-    public YouthLimitAge(int value) {
-        this(Integer.valueOf(value).shortValue());
-    }
-
-    public short getValue() {
+    public int getValue() {
         return value;
     }
 

@@ -1,15 +1,15 @@
-package com.mbenabda.techwatch.testES.facts.age;
+package com.mbenabda.techwatch.testES.facts.answers;
 
 import java.util.Objects;
 
 public final class Age {
-    private final short value;
+    private final int value;
 
-    public Age(final short value) {
+    public Age(final int value) {
         this.value = value;
     }
 
-    public short getValue() {
+    public int getValue() {
         return value;
     }
 

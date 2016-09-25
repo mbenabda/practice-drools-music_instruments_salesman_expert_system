@@ -1,6 +1,6 @@
 package com.mbenabda.techwatch.testES.config.drools;
 
-import com.mbenabda.techwatch.testES.facts.Person;
+import com.mbenabda.techwatch.testES.facts.answers.Age;
 import com.mbenabda.techwatch.testES.facts.age.YouthLimitAge;
 import com.mbenabda.techwatch.testES.facts.loudness.LoudnessThreshold;
 import com.mbenabda.techwatch.testES.repository.GenreRepository;
@@ -9,14 +9,13 @@ import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
-import java.time.LocalDate;
 
 @Configuration
 public class DroolsConfiguration {
+    private static final int LIMIT_AGE = 18;
     @Autowired
     GenreRepository genreRepository;
 
@@ -35,7 +34,7 @@ public class DroolsConfiguration {
     }
 
     private void simulateAnswerstoQuestions(KieSession session) {
-        session.insert(new Person(LocalDate.of(1988, 7, 18)));
+        session.insert(new Age(LIMIT_AGE + 1));
     }
 
     private void addMockToDatabase() {
@@ -50,7 +49,7 @@ public class DroolsConfiguration {
 
         new LoadedRulesLogger().logRulesLoadedIn(session.getKieBase());
 
-        session.insert(new YouthLimitAge(18));
+        session.insert(new YouthLimitAge(LIMIT_AGE));
         session.insert(new LoudnessThreshold(.5f));
 
         genreRepository.findAll().stream().forEach(session::insert);

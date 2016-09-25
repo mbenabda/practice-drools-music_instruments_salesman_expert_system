@@ -5,9 +5,9 @@
         .module('testEsApp')
         .controller('InstrumentDetailController', InstrumentDetailController);
 
-    InstrumentDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Instrument'];
+    InstrumentDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Instrument', 'Genre'];
 
-    function InstrumentDetailController($scope, $rootScope, $stateParams, previousState, entity, Instrument) {
+    function InstrumentDetailController($scope, $rootScope, $stateParams, previousState, entity, Instrument, Genre) {
         var vm = this;
 
         vm.instrument = entity;

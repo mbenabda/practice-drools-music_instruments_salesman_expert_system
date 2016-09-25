@@ -5,9 +5,9 @@
         .module('testEsApp')
         .controller('GenreDetailController', GenreDetailController);
 
-    GenreDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Genre'];
+    GenreDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Genre', 'Instrument'];
 
-    function GenreDetailController($scope, $rootScope, $stateParams, previousState, entity, Genre) {
+    function GenreDetailController($scope, $rootScope, $stateParams, previousState, entity, Genre, Instrument) {
         var vm = this;
 
         vm.genre = entity;

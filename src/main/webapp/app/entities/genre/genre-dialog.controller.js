@@ -5,14 +5,15 @@
         .module('testEsApp')
         .controller('GenreDialogController', GenreDialogController);
 
-    GenreDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Genre'];
+    GenreDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Genre', 'Instrument'];
 
-    function GenreDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Genre) {
+    function GenreDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Genre, Instrument) {
         var vm = this;
 
         vm.genre = entity;
         vm.clear = clear;
         vm.save = save;
+        vm.instruments = Instrument.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

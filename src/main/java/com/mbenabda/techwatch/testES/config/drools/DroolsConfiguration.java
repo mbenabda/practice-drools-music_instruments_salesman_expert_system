@@ -22,16 +22,8 @@ public class DroolsConfiguration {
     @Autowired
     InstrumentRepository instrumentRepository;
 
-    @PostConstruct
-    public void fireAllRules() {
-        populateDatabase();
-
-        kieSession().fireAllRules();
-    }
-
-    private void populateDatabase() {
-        new FakeDataInitializer(genreRepository, instrumentRepository).init();
-    }
+    @Autowired
+    FakeDataInitializer fakeDataInitializer;
 
     // load up the knowledge base
     KieSession session;
@@ -51,5 +43,16 @@ public class DroolsConfiguration {
             instrumentRepository.findAll().stream().forEach(session::insert);
         }
         return session;
+    }
+
+    @PostConstruct
+    public void fireAllRules() {
+        populateDatabase();
+
+        kieSession().fireAllRules();
+    }
+
+    private void populateDatabase() {
+        fakeDataInitializer.init();
     }
 }

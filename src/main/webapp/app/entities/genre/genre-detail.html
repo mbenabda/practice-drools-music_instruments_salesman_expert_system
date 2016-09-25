@@ -16,6 +16,12 @@
         <dd>
             <span>{{vm.genre.goldenAgeEndingYear}}</span>
         </dd>
+        <dt><span>Characteristic Instruments</span></dt>
+        <dd>
+            <span ng-repeat="characteristicInstruments in vm.genre.characteristicInstruments">
+                <a ui-sref="instrument-detail({id: characteristicInstruments.id})">{{characteristicInstruments.name}}</a>{{$last ? '' : ', '}}
+            </span>
+        </dd>
     </dl>
 
     <button type="submit"

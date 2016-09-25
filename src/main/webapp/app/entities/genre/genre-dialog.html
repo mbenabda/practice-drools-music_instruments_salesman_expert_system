@@ -38,6 +38,10 @@
                      />
         </div>
 
+        <div class="form-group">
+            <label for="field_characteristicInstruments">Characteristic Instruments</label>
+            <select class="form-control" id="field_characteristicInstruments" multiple name="characteristicInstruments" ng-model="vm.genre.characteristicInstruments" ng-options="instrument as instrument.name for instrument in vm.instruments track by instrument.id"></select>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">

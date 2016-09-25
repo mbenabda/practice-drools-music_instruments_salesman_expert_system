@@ -1,9 +1,12 @@
 package com.mbenabda.techwatch.testES.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -55,6 +58,10 @@ public class Instrument implements Serializable {
     @NotNull
     @Column(name = "kind", nullable = false)
     private String kind;
+
+    @ManyToMany(mappedBy = "characteristicInstruments")
+    @JsonIgnore
+    private Set<Genre> genresItIsCharacteristicOfs = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -166,6 +173,31 @@ public class Instrument implements Serializable {
 
     public void setKind(String kind) {
         this.kind = kind;
+    }
+
+    public Set<Genre> getGenresItIsCharacteristicOfs() {
+        return genresItIsCharacteristicOfs;
+    }
+
+    public Instrument genresItIsCharacteristicOfs(Set<Genre> genres) {
+        this.genresItIsCharacteristicOfs = genres;
+        return this;
+    }
+
+    public Instrument addGenresItIsCharacteristicOf(Genre genre) {
+        genresItIsCharacteristicOfs.add(genre);
+        genre.getCharacteristicInstruments().add(this);
+        return this;
+    }
+
+    public Instrument removeGenresItIsCharacteristicOf(Genre genre) {
+        genresItIsCharacteristicOfs.remove(genre);
+        genre.getCharacteristicInstruments().remove(this);
+        return this;
+    }
+
+    public void setGenresItIsCharacteristicOfs(Set<Genre> genres) {
+        this.genresItIsCharacteristicOfs = genres;
     }
 
     @Override

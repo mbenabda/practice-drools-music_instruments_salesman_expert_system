@@ -12,4 +12,5 @@ import java.util.List;
 @SuppressWarnings("unused")
 public interface InstrumentRepository extends JpaRepository<Instrument,Long> {
 
+    Instrument findByCategoryAndName(String category, String name);
 }

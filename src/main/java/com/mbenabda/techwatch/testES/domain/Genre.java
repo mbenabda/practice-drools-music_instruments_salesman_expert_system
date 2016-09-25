@@ -4,6 +4,8 @@ package com.mbenabda.techwatch.testES.domain;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -28,6 +30,12 @@ public class Genre implements Serializable {
 
     @Column(name = "golden_age_ending_year")
     private Integer goldenAgeEndingYear;
+
+    @ManyToMany
+    @JoinTable(name = "genre_characteristic_instruments",
+               joinColumns = @JoinColumn(name="genres_id", referencedColumnName="ID"),
+               inverseJoinColumns = @JoinColumn(name="characteristic_instruments_id", referencedColumnName="ID"))
+    private Set<Instrument> characteristicInstruments = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -74,6 +82,31 @@ public class Genre implements Serializable {
 
     public void setGoldenAgeEndingYear(Integer goldenAgeEndingYear) {
         this.goldenAgeEndingYear = goldenAgeEndingYear;
+    }
+
+    public Set<Instrument> getCharacteristicInstruments() {
+        return characteristicInstruments;
+    }
+
+    public Genre characteristicInstruments(Set<Instrument> instruments) {
+        this.characteristicInstruments = instruments;
+        return this;
+    }
+
+    public Genre addCharacteristicInstruments(Instrument instrument) {
+        characteristicInstruments.add(instrument);
+        instrument.getGenresItIsCharacteristicOfs().add(this);
+        return this;
+    }
+
+    public Genre removeCharacteristicInstruments(Instrument instrument) {
+        characteristicInstruments.remove(instrument);
+        instrument.getGenresItIsCharacteristicOfs().remove(this);
+        return this;
+    }
+
+    public void setCharacteristicInstruments(Set<Instrument> instruments) {
+        this.characteristicInstruments = instruments;
     }
 
     @Override

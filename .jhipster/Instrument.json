@@ -1,6 +1,14 @@
 {
     "fluentMethods": true,
-    "relationships": [],
+    "relationships": [
+        {
+            "relationshipName": "genresItIsCharacteristicOf",
+            "otherEntityName": "genre",
+            "relationshipType": "many-to-many",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "characteristicInstruments"
+        }
+    ],
     "fields": [
         {
             "fieldName": "name",

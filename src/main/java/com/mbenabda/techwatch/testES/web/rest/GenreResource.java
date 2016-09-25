@@ -89,7 +89,7 @@ public class GenreResource {
     @Timed
     public List<Genre> getAllGenres() {
         log.debug("REST request to get all Genres");
-        List<Genre> genres = genreRepository.findAll();
+        List<Genre> genres = genreRepository.findAllWithEagerRelationships();
         return genres;
     }
 
@@ -105,7 +105,7 @@ public class GenreResource {
     @Timed
     public ResponseEntity<Genre> getGenre(@PathVariable Long id) {
         log.debug("REST request to get Genre : {}", id);
-        Genre genre = genreRepository.findOne(id);
+        Genre genre = genreRepository.findOneWithEagerRelationships(id);
         return Optional.ofNullable(genre)
             .map(result -> new ResponseEntity<>(
                 result,

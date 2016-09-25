@@ -22,6 +22,7 @@
                     <th><span>Code</span></th>
                     <th><span>Golden Age Starting Year</span></th>
                     <th><span>Golden Age Ending Year</span></th>
+                    <th><span>Characteristic Instruments</span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -31,6 +32,11 @@
                     <td>{{genre.code}}</td>
                     <td>{{genre.goldenAgeStartingYear}}</td>
                     <td>{{genre.goldenAgeEndingYear}}</td>
+                    <td>
+                        <span ng-repeat="characteristicInstruments in genre.characteristicInstruments">
+                            <a class="form-control-static" ui-sref="instrument-detail({id: characteristicInstruments.id})">{{characteristicInstruments.name}}</a>{{$last ? '' : ', '}}
+                        </span>
+                    </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"

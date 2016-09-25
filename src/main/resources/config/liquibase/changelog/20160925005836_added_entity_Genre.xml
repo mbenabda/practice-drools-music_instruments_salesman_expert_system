@@ -36,5 +36,16 @@
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
         
+        <createTable tableName="genre_characteristic_instruments">
+            <column name="characteristic_instruments_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="genres_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="genres_id, characteristic_instruments_id" tableName="genre_characteristic_instruments"/>
+        
     </changeSet>
 </databaseChangeLog>

@@ -1,6 +1,15 @@
 {
     "fluentMethods": true,
-    "relationships": [],
+    "relationships": [
+        {
+            "relationshipName": "characteristicInstruments",
+            "otherEntityName": "instrument",
+            "relationshipType": "many-to-many",
+            "otherEntityField": "name",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "genresItIsCharacteristicOf"
+        }
+    ],
     "fields": [
         {
             "fieldName": "code",

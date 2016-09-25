@@ -5,7 +5,20 @@ import com.mbenabda.techwatch.testES.facts.budget.*
 import com.mbenabda.techwatch.testES.facts.dedication.*
 import com.mbenabda.techwatch.testES.facts.storage.*
 import com.mbenabda.techwatch.testES.facts.*
-rule "make suggestions"
+import com.mbenabda.techwatch.testES.facts.answers.*
+import java.util.Arrays
+import com.google.common.base.Joiner
+
+rule "suggest genres"
+when
+    $dob: DateOfBirth()
+    $genre: Genre()
+    eval(wasYoungAdultDuringGoldenAge($dob, $genre))
+then
+    insert(new GenreSuggestion($genre));
+end
+
+rule "suggest instruments"
 when
     $instrument: Instrument()
     CanAfford(instrumentId == $instrument.id)
@@ -17,5 +30,15 @@ when
 //    not IsTooLoud((instrumentId == $instrument.name)
 //    not BlacklistedCategoryOfInstruments(categoryCode == $instrument.category)
 then
-    insert(new Suggestion($instrument));
+    insert(new InstrumentSuggestion($instrument));
 end
+
+function boolean wasYoungAdultDuringGoldenAge(DateOfBirth dob, Genre g) {
+    Integer yearOfBirth = dob.getValue().getYear();
+    int yearOfTwenty = yearOfBirth + 20;
+    int yearOfThirty = yearOfBirth + 30;
+    return (g.getGoldenAgeStartingYear() >= yearOfTwenty && g.getGoldenAgeEndingYear() <= yearOfThirty)
+        || (yearOfTwenty <= g.getGoldenAgeStartingYear() && g.getGoldenAgeStartingYear() <= yearOfThirty)
+        || (yearOfTwenty <= g.getGoldenAgeEndingYear() && g.getGoldenAgeEndingYear() <= yearOfThirty)
+        ;
+}

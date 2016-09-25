@@ -1,5 +1,30 @@
-import com.mbenabda.techwatch.testES.facts.answers.Age
+import com.mbenabda.techwatch.testES.facts.answers.*
 import com.mbenabda.techwatch.testES.facts.age.*
+import java.time.*
+
+rule "infer age from DateOfBirth"
+when
+    DateOfBirth($dob: value)
+    not Age()
+then
+    insert(
+        new Age(
+            Period.between($dob, LocalDate.now()).getYears()
+        )
+    );
+end
+
+rule "infer DateOfBirth from age"
+when
+    Age($age: value)
+    not DateOfBirth()
+then
+    insert(
+        new DateOfBirth(
+            LocalDate.now().minusYears($age)
+        )
+    );
+end
 
 rule "person is young"
 when

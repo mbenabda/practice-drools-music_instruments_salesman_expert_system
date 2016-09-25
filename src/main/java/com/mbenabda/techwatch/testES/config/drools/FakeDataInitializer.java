@@ -66,6 +66,8 @@ public class FakeDataInitializer {
     private Genre genre(String code, int popularitySkpikeStartingYear, int popularitySkpikeEndingYear) {
         Genre genre = new Genre();
         genre.setCode(code);
+        genre.setGoldenAgeStartingYear(popularitySkpikeStartingYear);
+        genre.setGoldenAgeEndingYear(popularitySkpikeEndingYear);
         return genre;
     }
 }

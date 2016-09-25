@@ -4,10 +4,10 @@ import com.mbenabda.techwatch.testES.domain.Instrument;
 
 import java.util.Objects;
 
-public class Suggestion {
+public class InstrumentSuggestion {
     private final Instrument instrument;
 
-    public Suggestion(Instrument instrument) {
+    public InstrumentSuggestion(Instrument instrument) {
         this.instrument = instrument;
     }
 
@@ -19,7 +19,7 @@ public class Suggestion {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Suggestion that = (Suggestion) o;
+        InstrumentSuggestion that = (InstrumentSuggestion) o;
         return Objects.equals(instrument, that.instrument);
     }
 

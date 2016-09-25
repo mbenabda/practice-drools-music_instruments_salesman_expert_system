@@ -6,6 +6,7 @@ import com.mbenabda.techwatch.testES.facts.dedication.*
 import com.mbenabda.techwatch.testES.facts.storage.*
 import com.mbenabda.techwatch.testES.facts.*
 import com.mbenabda.techwatch.testES.facts.answers.*
+import com.mbenabda.techwatch.testES.facts.instruments.*
 import java.util.Arrays
 import com.google.common.base.Joiner
 
@@ -21,7 +22,10 @@ end
 rule "suggest instruments"
 when
     $instrument: Instrument()
+    not InstrumentSuggestion(instrument == $instrument)
     CanAfford(instrumentId == $instrument.id)
+    LikesGenre($genreId : genreId)
+    CharacteristicInstrument(genreId == $genreId, instrumentId == $instrument.getId())
     not TakesTooMuchTimeToLearn(instrumentId == $instrument.id)
     not BlacklistedKindOfInstruments(kindCode == $instrument.kind)
     not PlaysInstrument(instrumentId == $instrument.id)

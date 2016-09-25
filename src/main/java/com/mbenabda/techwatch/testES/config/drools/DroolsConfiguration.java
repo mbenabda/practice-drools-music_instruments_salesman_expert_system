@@ -1,6 +1,7 @@
 package com.mbenabda.techwatch.testES.config.drools;
 
 import com.mbenabda.techwatch.testES.facts.age.YouthLimitAge;
+import com.mbenabda.techwatch.testES.facts.instruments.CharacteristicInstrument;
 import com.mbenabda.techwatch.testES.facts.noise.LoudnessThreshold;
 import com.mbenabda.techwatch.testES.repository.GenreRepository;
 import com.mbenabda.techwatch.testES.repository.InstrumentRepository;
@@ -15,15 +16,11 @@ import javax.annotation.PostConstruct;
 
 @Configuration
 public class DroolsConfiguration {
-    private static final int LIMIT_AGE = 18;
-    @Autowired
-    GenreRepository genreRepository;
-
-    @Autowired
-    InstrumentRepository instrumentRepository;
-
     @Autowired
     FakeDataInitializer fakeDataInitializer;
+
+    @Autowired
+    InitialFactsInitializer initialFactsInitializer;
 
     // load up the knowledge base
     KieSession session;
@@ -36,11 +33,7 @@ public class DroolsConfiguration {
 
             new LoadedRulesLogger().logRulesLoadedIn(session.getKieBase());
 
-            session.insert(new YouthLimitAge(LIMIT_AGE));
-            session.insert(new LoudnessThreshold(.5f));
 
-            genreRepository.findAll().stream().forEach(session::insert);
-            instrumentRepository.findAll().stream().forEach(session::insert);
         }
         return session;
     }
@@ -48,8 +41,13 @@ public class DroolsConfiguration {
     @PostConstruct
     public void fireAllRules() {
         populateDatabase();
+        addInitialFacts();
 
         kieSession().fireAllRules();
+    }
+
+    private void addInitialFacts() {
+        initialFactsInitializer.init();
     }
 
     private void populateDatabase() {

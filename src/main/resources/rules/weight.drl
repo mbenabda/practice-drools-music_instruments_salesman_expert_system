@@ -1,0 +1,17 @@
+import com.mbenabda.techwatch.testES.domain.Instrument
+import com.mbenabda.techwatch.testES.facts.weight.*
+
+rule "human weight limit"
+when
+    not(WeightLimit())
+then
+    insert(new WeightLimit(Float.valueOf(50)));
+end
+
+rule "intrument is heavy"
+when
+    WeightLimit( $limit: value )
+    $instrument : Instrument( averageWeight >= $limit)
+then
+    insert(new IsTooHeavy($instrument.getName()));
+end

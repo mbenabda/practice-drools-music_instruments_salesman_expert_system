@@ -1,0 +1,19 @@
+import com.mbenabda.techwatch.testES.facts.weight.*
+import com.mbenabda.techwatch.testES.facts.answers.illness.*
+import com.mbenabda.techwatch.testES.facts.BannishCategory
+
+rule "cannot weight heavy instruments with back pain"
+when
+    $limit: WeightLimit(value > 5)
+    HasBackPain()
+then
+    $limit.setValue(Float.valueOf(5));
+    update($limit);
+end
+
+rule "avoid woodwinds if you have breathing issues"
+when
+    HasBreathingIssues()
+then
+    insert(new BannishCategory("WOODWINDS"));
+end

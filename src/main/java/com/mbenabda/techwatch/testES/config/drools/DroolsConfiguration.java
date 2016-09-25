@@ -3,6 +3,7 @@ package com.mbenabda.techwatch.testES.config.drools;
 import com.mbenabda.techwatch.testES.facts.answers.Age;
 import com.mbenabda.techwatch.testES.facts.age.YouthLimitAge;
 import com.mbenabda.techwatch.testES.facts.noise.LoudnessThreshold;
+import com.mbenabda.techwatch.testES.facts.weight.WeightLimit;
 import com.mbenabda.techwatch.testES.repository.GenreRepository;
 import com.mbenabda.techwatch.testES.repository.InstrumentRepository;
 import org.kie.api.KieServices;
@@ -51,6 +52,7 @@ public class DroolsConfiguration {
 
         session.insert(new YouthLimitAge(LIMIT_AGE));
         session.insert(new LoudnessThreshold(.5f));
+        session.insert(new WeightLimit(50f));
 
         genreRepository.findAll().stream().forEach(session::insert);
         instrumentRepository.findAll().stream().forEach(session::insert);

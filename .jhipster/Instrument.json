@@ -3,7 +3,7 @@
     "relationships": [],
     "fields": [
         {
-            "fieldName": "code",
+            "fieldName": "name",
             "fieldType": "String",
             "fieldValidateRules": [
                 "required"

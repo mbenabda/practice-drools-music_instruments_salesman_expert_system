@@ -95,7 +95,7 @@
                     resolve: {
                         entity: function () {
                             return {
-                                code: null,
+                                name: null,
                                 averageVolume: null,
                                 averageWeight: null,
                                 averageLowEndPrice: null,

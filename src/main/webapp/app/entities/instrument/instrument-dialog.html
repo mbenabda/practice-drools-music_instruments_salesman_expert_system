@@ -14,13 +14,13 @@
                     ng-model="vm.instrument.id" readonly />
         </div>
         <div class="form-group">
-            <label class="control-label" for="field_code">Code</label>
-            <input type="text" class="form-control" name="code" id="field_code"
-                    ng-model="vm.instrument.code"
+            <label class="control-label" for="field_name">Name</label>
+            <input type="text" class="form-control" name="name" id="field_name"
+                    ng-model="vm.instrument.name"
                     required />
-            <div ng-show="editForm.code.$invalid">
+            <div ng-show="editForm.name.$invalid">
                 <p class="help-block"
-                    ng-show="editForm.code.$error.required">
+                    ng-show="editForm.name.$error.required">
                     This field is required.
                 </p>
             </div>

@@ -20,8 +20,8 @@ public class Instrument implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "code", nullable = false)
-    private String code;
+    @Column(name = "name", nullable = false)
+    private String name;
 
     @NotNull
     @DecimalMin(value = "0")
@@ -64,17 +64,17 @@ public class Instrument implements Serializable {
         this.id = id;
     }
 
-    public String getCode() {
-        return code;
+    public String getName() {
+        return name;
     }
 
-    public Instrument code(String code) {
-        this.code = code;
+    public Instrument name(String name) {
+        this.name = name;
         return this;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Float getAverageVolume() {
@@ -192,7 +192,7 @@ public class Instrument implements Serializable {
     public String toString() {
         return "Instrument{" +
             "id=" + id +
-            ", code='" + code + "'" +
+            ", name='" + name + "'" +
             ", averageVolume='" + averageVolume + "'" +
             ", averageWeight='" + averageWeight + "'" +
             ", averageLowEndPrice='" + averageLowEndPrice + "'" +

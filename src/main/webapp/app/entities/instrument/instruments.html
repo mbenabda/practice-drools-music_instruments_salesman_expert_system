@@ -19,7 +19,7 @@
             <thead>
                 <tr>
                     <th><span>ID</span></th>
-                    <th><span>Code</span></th>
+                    <th><span>Name</span></th>
                     <th><span>Average Volume</span></th>
                     <th><span>Average Weight</span></th>
                     <th><span>Average Low End Price</span></th>
@@ -33,7 +33,7 @@
             <tbody>
                 <tr ng-repeat="instrument in vm.instruments track by instrument.id">
                     <td><a ui-sref="instrument-detail({id:instrument.id})">{{instrument.id}}</a></td>
-                    <td>{{instrument.code}}</td>
+                    <td>{{instrument.name}}</td>
                     <td>{{instrument.averageVolume}}</td>
                     <td>{{instrument.averageWeight}}</td>
                     <td>{{instrument.averageLowEndPrice}}</td>

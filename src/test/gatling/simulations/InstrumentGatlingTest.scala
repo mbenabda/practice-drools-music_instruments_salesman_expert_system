@@ -67,7 +67,7 @@ class InstrumentGatlingTest extends Simulation {
             .exec(http("Create new instrument")
             .post("/api/instruments")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "code":"SAMPLE_TEXT", "averageVolume":null, "averageWeight":null, "averageLowEndPrice":null, "requiredHoursOfPracticePerWeek":"0", "loudness":null, "category":"SAMPLE_TEXT", "kind":"SAMPLE_TEXT"}""")).asJSON
+            .body(StringBody("""{"id":null, "name":"SAMPLE_TEXT", "averageVolume":null, "averageWeight":null, "averageLowEndPrice":null, "requiredHoursOfPracticePerWeek":"0", "loudness":null, "category":"SAMPLE_TEXT", "kind":"SAMPLE_TEXT"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_instrument_url"))).exitHereIfFailed
             .pause(10)

@@ -39,8 +39,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = TestEsApp.class)
 
 public class InstrumentResourceIntTest {
-    private static final String DEFAULT_CODE = "AAAAA";
-    private static final String UPDATED_CODE = "BBBBB";
+    private static final String DEFAULT_NAME = "AAAAA";
+    private static final String UPDATED_NAME = "BBBBB";
 
     private static final Float DEFAULT_AVERAGE_VOLUME = 0F;
     private static final Float UPDATED_AVERAGE_VOLUME = 1F;
@@ -95,7 +95,7 @@ public class InstrumentResourceIntTest {
      */
     public static Instrument createEntity(EntityManager em) {
         Instrument instrument = new Instrument()
-                .code(DEFAULT_CODE)
+                .name(DEFAULT_NAME)
                 .averageVolume(DEFAULT_AVERAGE_VOLUME)
                 .averageWeight(DEFAULT_AVERAGE_WEIGHT)
                 .averageLowEndPrice(DEFAULT_AVERAGE_LOW_END_PRICE)
@@ -127,7 +127,7 @@ public class InstrumentResourceIntTest {
         List<Instrument> instruments = instrumentRepository.findAll();
         assertThat(instruments).hasSize(databaseSizeBeforeCreate + 1);
         Instrument testInstrument = instruments.get(instruments.size() - 1);
-        assertThat(testInstrument.getCode()).isEqualTo(DEFAULT_CODE);
+        assertThat(testInstrument.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testInstrument.getAverageVolume()).isEqualTo(DEFAULT_AVERAGE_VOLUME);
         assertThat(testInstrument.getAverageWeight()).isEqualTo(DEFAULT_AVERAGE_WEIGHT);
         assertThat(testInstrument.getAverageLowEndPrice()).isEqualTo(DEFAULT_AVERAGE_LOW_END_PRICE);
@@ -139,10 +139,10 @@ public class InstrumentResourceIntTest {
 
     @Test
     @Transactional
-    public void checkCodeIsRequired() throws Exception {
+    public void checkNameIsRequired() throws Exception {
         int databaseSizeBeforeTest = instrumentRepository.findAll().size();
         // set the field null
-        instrument.setCode(null);
+        instrument.setName(null);
 
         // Create the Instrument, which fails.
 
@@ -292,7 +292,7 @@ public class InstrumentResourceIntTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(instrument.getId().intValue())))
-                .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
+                .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
                 .andExpect(jsonPath("$.[*].averageVolume").value(hasItem(DEFAULT_AVERAGE_VOLUME.doubleValue())))
                 .andExpect(jsonPath("$.[*].averageWeight").value(hasItem(DEFAULT_AVERAGE_WEIGHT.doubleValue())))
                 .andExpect(jsonPath("$.[*].averageLowEndPrice").value(hasItem(DEFAULT_AVERAGE_LOW_END_PRICE.doubleValue())))
@@ -313,7 +313,7 @@ public class InstrumentResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(instrument.getId().intValue()))
-            .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()))
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.averageVolume").value(DEFAULT_AVERAGE_VOLUME.doubleValue()))
             .andExpect(jsonPath("$.averageWeight").value(DEFAULT_AVERAGE_WEIGHT.doubleValue()))
             .andExpect(jsonPath("$.averageLowEndPrice").value(DEFAULT_AVERAGE_LOW_END_PRICE.doubleValue()))
@@ -341,7 +341,7 @@ public class InstrumentResourceIntTest {
         // Update the instrument
         Instrument updatedInstrument = instrumentRepository.findOne(instrument.getId());
         updatedInstrument
-                .code(UPDATED_CODE)
+                .name(UPDATED_NAME)
                 .averageVolume(UPDATED_AVERAGE_VOLUME)
                 .averageWeight(UPDATED_AVERAGE_WEIGHT)
                 .averageLowEndPrice(UPDATED_AVERAGE_LOW_END_PRICE)
@@ -359,7 +359,7 @@ public class InstrumentResourceIntTest {
         List<Instrument> instruments = instrumentRepository.findAll();
         assertThat(instruments).hasSize(databaseSizeBeforeUpdate);
         Instrument testInstrument = instruments.get(instruments.size() - 1);
-        assertThat(testInstrument.getCode()).isEqualTo(UPDATED_CODE);
+        assertThat(testInstrument.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testInstrument.getAverageVolume()).isEqualTo(UPDATED_AVERAGE_VOLUME);
         assertThat(testInstrument.getAverageWeight()).isEqualTo(UPDATED_AVERAGE_WEIGHT);
         assertThat(testInstrument.getAverageLowEndPrice()).isEqualTo(UPDATED_AVERAGE_LOW_END_PRICE);

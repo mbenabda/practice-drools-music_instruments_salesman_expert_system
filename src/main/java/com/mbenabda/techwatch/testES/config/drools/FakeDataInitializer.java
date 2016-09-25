@@ -1,24 +1,21 @@
-package com.mbenabda.techwatch.testES.config;
+package com.mbenabda.techwatch.testES.config.drools;
 
 import com.mbenabda.techwatch.testES.domain.Genre;
 import com.mbenabda.techwatch.testES.domain.Instrument;
 import com.mbenabda.techwatch.testES.repository.GenreRepository;
 import com.mbenabda.techwatch.testES.repository.InstrumentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.Arrays;
 
-@Component
 public class FakeDataInitializer {
-    @Autowired
-    GenreRepository genreRepository;
+    private final GenreRepository genreRepository;
+    private final InstrumentRepository instrumentRepository;
 
-    @Autowired
-    InstrumentRepository instrumentRepository;
+    public FakeDataInitializer(GenreRepository genreRepository, InstrumentRepository instrumentRepository) {
+        this.genreRepository = genreRepository;
+        this.instrumentRepository = instrumentRepository;
+    }
 
-    @PostConstruct
     public void init() {
         /*
             genre popularity over time derived from
@@ -53,9 +50,9 @@ public class FakeDataInitializer {
         ));
     }
 
-    private Instrument instrument(String category, String king, String code, float weight, float volume, float price, float loudness, int requiredHoursOfPracticePerWeek) {
+    private Instrument instrument(String category, String king, String name, float weight, float volume, float price, float loudness, int requiredHoursOfPracticePerWeek) {
         Instrument instrument = new Instrument();
-        instrument.setCode(code);
+        instrument.setName(name);
         instrument.setCategory(category);
         instrument.setKind(king);
         instrument.setAverageWeight(weight);

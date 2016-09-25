@@ -3,6 +3,7 @@ package com.mbenabda.techwatch.testES.config.drools;
 import com.mbenabda.techwatch.testES.facts.age.YouthLimitAge;
 import com.mbenabda.techwatch.testES.facts.instruments.CharacteristicInstrument;
 import com.mbenabda.techwatch.testES.facts.noise.LoudnessThreshold;
+import com.mbenabda.techwatch.testES.facts.storage.VolumeLimit;
 import com.mbenabda.techwatch.testES.repository.GenreRepository;
 import com.mbenabda.techwatch.testES.repository.InstrumentRepository;
 import org.kie.api.runtime.KieSession;
@@ -29,6 +30,7 @@ public class InitialFactsInitializer {
     public void init() {
         session.insert(new YouthLimitAge(LIMIT_AGE));
         session.insert(new LoudnessThreshold(.5f));
+        session.insert(new VolumeLimit(5000f));
 
         instrumentRepository.findAll().stream().forEach(session::insert);
 

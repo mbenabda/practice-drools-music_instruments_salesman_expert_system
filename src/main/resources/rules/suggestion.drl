@@ -4,9 +4,10 @@ import com.mbenabda.techwatch.testES.facts.weight.*
 import com.mbenabda.techwatch.testES.facts.budget.*
 import com.mbenabda.techwatch.testES.facts.dedication.*
 import com.mbenabda.techwatch.testES.facts.storage.*
-import com.mbenabda.techwatch.testES.facts.*
 import com.mbenabda.techwatch.testES.facts.answers.*
 import com.mbenabda.techwatch.testES.facts.instruments.*
+import com.mbenabda.techwatch.testES.facts.noise.*
+import com.mbenabda.techwatch.testES.facts.*
 import java.util.Arrays
 import com.google.common.base.Joiner
 
@@ -27,14 +28,11 @@ when
     LikesGenre($genreId : genreId)
     CharacteristicInstrument(genreId == $genreId, instrumentId == $instrument.getId())
     not BlacklistedKindOfInstruments(kindCode == $instrument.kind)
-
-    not TakesTooMuchTimeToLearn(instrumentId == $instrument.id)
     not PlaysInstrument(instrumentId == $instrument.id)
-    not TakesTooMuchSpace(instrumentId == $instrument.id)
     not IsTooHeavy(instrumentId == $instrument.getId())
-//    (sedentary || (nomad && not IsHeavy(instrumentId == $instrument.name)))
-//    not IsTooLoud((instrumentId == $instrument.name)
-//    not BlacklistedCategoryOfInstruments(categoryCode == $instrument.category)
+    not IsTooLoud(instrumentId == $instrument.name)
+    not TakesTooMuchTimeToLearn(instrumentId == $instrument.id)
+    not TakesTooMuchSpace(instrumentId == $instrument.id)
 then
     insert(new InstrumentSuggestion($instrument));
 end

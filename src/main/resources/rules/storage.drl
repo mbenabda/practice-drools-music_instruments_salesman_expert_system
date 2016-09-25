@@ -1,0 +1,20 @@
+import com.mbenabda.techwatch.testES.domain.*
+import com.mbenabda.techwatch.testES.facts.storage.*
+import com.mbenabda.techwatch.testES.facts.answers.lifestyle.*
+
+rule "big instruments take a lot of space"
+when
+    VolumeLimit($threshold : value)
+    $instrument : Instrument(averageVolume >= $threshold)
+then
+    insert(new TakesALotOfSpace($instrument.getId()));
+end
+
+
+rule "big instruments are not appropriate for appartments"
+when
+    LivesInAnAppartment()
+    TakesALotOfSpace($instrumentId: instrumentId)
+then
+    insert(new TakesTooMuchSpace($instrumentId));
+end

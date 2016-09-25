@@ -1,4 +1,7 @@
+import com.mbenabda.techwatch.testES.domain.*
 import com.mbenabda.techwatch.testES.facts.answers.*
+import com.mbenabda.techwatch.testES.facts.dedication.*
+import com.mbenabda.techwatch.testES.facts.answers.lifestyle.*
 import com.mbenabda.techwatch.testES.facts.age.*
 
 rule "young people travel"
@@ -7,4 +10,13 @@ when
     not IsNomad()
 then
     insert(new IsNomad());
+end
+
+
+rule "do not suggest instruments that require more time than available"
+when
+    DedicatedHoursOfPracticePerWeek($freeHours: value)
+    Instrument($instrumentId: id, requiredHoursOfPracticePerWeek > $freeHours)
+then
+    insert(new TakesTooMuchTimeToLearn($instrumentId));
 end

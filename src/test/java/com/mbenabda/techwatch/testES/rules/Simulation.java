@@ -11,6 +11,8 @@ import com.mbenabda.techwatch.testES.facts.answers.DateOfBirth;
 import com.mbenabda.techwatch.testES.facts.answers.LikesGenre;
 import com.mbenabda.techwatch.testES.facts.answers.illness.HasBackPain;
 import com.mbenabda.techwatch.testES.facts.answers.IsNomad;
+import com.mbenabda.techwatch.testES.facts.answers.lifestyle.DedicatedHoursOfPracticePerWeek;
+import com.mbenabda.techwatch.testES.facts.answers.lifestyle.LivesInAnAppartment;
 import com.mbenabda.techwatch.testES.facts.noise.LoudnessThreshold;
 import com.mbenabda.techwatch.testES.facts.suggestion.GenreSuggestion;
 import com.mbenabda.techwatch.testES.facts.suggestion.InstrumentSuggestion;
@@ -38,43 +40,13 @@ public class Simulation {
     @Inject
     KieSession session;
 
-    @Test
-    public void suggest_instruments() {
-        Arrays.asList(
-            new YouthLimitAge(18),
-            new LoudnessThreshold(.5f),
 
-            howOldAreYou(),
-            doYouHaveAnyHealthIssue(),
-            howMuchWouldYouSpendInAStudyInstrument()
-        ).stream()
-            .forEach(session::insert);
+    private DedicatedHoursOfPracticePerWeek howMuchHoursPerWeekCouldYouDedicateToPractice() {
+        return new DedicatedHoursOfPracticePerWeek(2);
+    }
 
-        doYouTravelALot().ifPresent(session::insert);
-
-        session.fireAllRules();
-
-        pickGenresYouLikeFromSuggestedGenres()
-            .stream()
-            .map(genre -> new LikesGenre(genre.getId()))
-            .forEach(session::insert);
-
-        session.fireAllRules();
-
-        doYouPlayAnyInstruments().stream()
-            .forEach(session::insert);
-
-        session.fireAllRules();
-
-        LOG.info(
-            "\n suggestions : {}\n",
-            Joiner.on("\n").join(
-                suggestInstruments()
-                .map(instrument -> instrument.getCategory() + " " + instrument.getName())
-                .collect(toList())
-            )
-        );
-
+    private Object whereDoYouLive() {
+        return new LivesInAnAppartment();
     }
 
     private Collection<PlaysInstrument> doYouPlayAnyInstruments() {
@@ -84,11 +56,6 @@ public class Simulation {
         return suggestedInstruments.isEmpty()
             ? Collections.emptyList()
             : Arrays.asList(new PlaysInstrument(suggestedInstruments.get(0).getId()));
-    }
-
-    private Stream<Instrument> suggestInstruments() {
-        return sessionObjectsOfType(InstrumentSuggestion.class)
-            .map(suggestion -> suggestion.getInstrument());
     }
 
     private Budget howMuchWouldYouSpendInAStudyInstrument() {
@@ -111,14 +78,60 @@ public class Simulation {
             .collect(toList());
     }
 
+    private Optional<IsNomad> doYouTravelALot() {
+        return Optional.of(new IsNomad());
+    }
+
+
+    @Test
+    public void suggest_instruments() {
+        Arrays.asList(
+            howOldAreYou(),
+            doYouHaveAnyHealthIssue(),
+            howMuchWouldYouSpendInAStudyInstrument()
+        ).stream()
+            .forEach(session::insert);
+
+        doYouTravelALot().ifPresent(session::insert);
+
+        session.fireAllRules();
+
+        pickGenresYouLikeFromSuggestedGenres()
+            .stream()
+            .map(genre -> new LikesGenre(genre.getId()))
+            .forEach(session::insert);
+
+        session.fireAllRules();
+
+        session.insert(whereDoYouLive());
+
+        doYouPlayAnyInstruments().stream()
+            .forEach(session::insert);
+
+        session.insert(howMuchHoursPerWeekCouldYouDedicateToPractice());
+
+        session.fireAllRules();
+
+        LOG.info(
+            "\n suggestions : {}\n",
+            Joiner.on("\n").join(
+                suggestInstruments()
+                .map(instrument -> instrument.getCategory() + " " + instrument.getName())
+                .collect(toList())
+            )
+        );
+
+    }
+
+    private Stream<Instrument> suggestInstruments() {
+        return sessionObjectsOfType(InstrumentSuggestion.class)
+            .map(suggestion -> suggestion.getInstrument());
+    }
+
     private <T> Stream<T> sessionObjectsOfType(Class<T> type) {
         return session
             .getObjects(type::isInstance).stream()
             .map(type::cast);
-    }
-
-    private Optional<IsNomad> doYouTravelALot() {
-        return Optional.of(new IsNomad());
     }
 
 }

@@ -1,5 +1,6 @@
 import com.mbenabda.techwatch.testES.domain.Instrument
 import com.mbenabda.techwatch.testES.facts.noise.*
+import com.mbenabda.techwatch.testES.facts.answers.lifestyle.*
 
 rule "intrument is silent"
 when
@@ -18,3 +19,11 @@ then
 end
 
 
+rule "instrument too loud for appartment"
+when
+    LivesInAnAppartment()
+    $instrument: Instrument()
+    IsLoud(instrumentId == $instrument.getId())
+then
+    insert(new IsTooLoud($instrument.getId()));
+end

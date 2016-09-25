@@ -1,0 +1,51 @@
+
+<div>
+    <h2><span>Instrument</span> {{vm.instrument.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Code</span></dt>
+        <dd>
+            <span>{{vm.instrument.code}}</span>
+        </dd>
+        <dt><span>Average Volume</span></dt>
+        <dd>
+            <span>{{vm.instrument.averageVolume}}</span>
+        </dd>
+        <dt><span>Average Weight</span></dt>
+        <dd>
+            <span>{{vm.instrument.averageWeight}}</span>
+        </dd>
+        <dt><span>Average Low End Price</span></dt>
+        <dd>
+            <span>{{vm.instrument.averageLowEndPrice}}</span>
+        </dd>
+        <dt><span>Required Hours Of Practice Per Week</span></dt>
+        <dd>
+            <span>{{vm.instrument.requiredHoursOfPracticePerWeek}}</span>
+        </dd>
+        <dt><span>Loudness</span></dt>
+        <dd>
+            <span>{{vm.instrument.loudness}}</span>
+        </dd>
+        <dt><span>Category</span></dt>
+        <dd>
+            <span>{{vm.instrument.category}}</span>
+        </dd>
+        <dt><span>Kind</span></dt>
+        <dd>
+            <span>{{vm.instrument.kind}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="instrument-detail.edit({id:vm.instrument.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm"> Edit</span>
+    </button>
+</div>

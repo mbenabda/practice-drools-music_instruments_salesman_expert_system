@@ -1,5 +1,6 @@
 import com.mbenabda.techwatch.testES.domain.Instrument
 import com.mbenabda.techwatch.testES.facts.weight.*
+import com.mbenabda.techwatch.testES.facts.answers.*
 
 rule "human weight limit"
 when
@@ -14,4 +15,13 @@ when
     $instrument : Instrument( averageWeight >= $limit)
 then
     insert(new IsHeavy($instrument.getId()));
+end
+
+rule ""
+when
+    $instrument: Instrument()
+    IsNomad()
+    IsHeavy(instrumentId == $instrument.getId())
+then
+    insert(new IsTooHeavy($instrument.getId()));
 end

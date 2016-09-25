@@ -26,10 +26,12 @@ when
     CanAfford(instrumentId == $instrument.id)
     LikesGenre($genreId : genreId)
     CharacteristicInstrument(genreId == $genreId, instrumentId == $instrument.getId())
-    not TakesTooMuchTimeToLearn(instrumentId == $instrument.id)
     not BlacklistedKindOfInstruments(kindCode == $instrument.kind)
+
+    not TakesTooMuchTimeToLearn(instrumentId == $instrument.id)
     not PlaysInstrument(instrumentId == $instrument.id)
     not TakesTooMuchSpace(instrumentId == $instrument.id)
+    not IsTooHeavy(instrumentId == $instrument.getId())
 //    (sedentary || (nomad && not IsHeavy(instrumentId == $instrument.name)))
 //    not IsTooLoud((instrumentId == $instrument.name)
 //    not BlacklistedCategoryOfInstruments(categoryCode == $instrument.category)

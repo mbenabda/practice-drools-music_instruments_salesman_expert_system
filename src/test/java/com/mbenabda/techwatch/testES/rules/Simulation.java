@@ -4,11 +4,13 @@ import com.google.common.base.Joiner;
 import com.mbenabda.techwatch.testES.TestEsApp;
 import com.mbenabda.techwatch.testES.domain.Genre;
 import com.mbenabda.techwatch.testES.domain.Instrument;
+import com.mbenabda.techwatch.testES.facts.PlaysInstrument;
 import com.mbenabda.techwatch.testES.facts.age.YouthLimitAge;
 import com.mbenabda.techwatch.testES.facts.answers.Budget;
 import com.mbenabda.techwatch.testES.facts.answers.DateOfBirth;
 import com.mbenabda.techwatch.testES.facts.answers.LikesGenre;
 import com.mbenabda.techwatch.testES.facts.answers.illness.HasBackPain;
+import com.mbenabda.techwatch.testES.facts.answers.IsNomad;
 import com.mbenabda.techwatch.testES.facts.noise.LoudnessThreshold;
 import com.mbenabda.techwatch.testES.facts.suggestion.GenreSuggestion;
 import com.mbenabda.techwatch.testES.facts.suggestion.InstrumentSuggestion;
@@ -22,14 +24,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.inject.Inject;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toSet;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = TestEsApp.class)
@@ -52,11 +50,18 @@ public class Simulation {
         ).stream()
             .forEach(session::insert);
 
+        doYouTravelALot().ifPresent(session::insert);
+
         session.fireAllRules();
 
         pickGenresYouLikeFromSuggestedGenres()
             .stream()
             .map(genre -> new LikesGenre(genre.getId()))
+            .forEach(session::insert);
+
+        session.fireAllRules();
+
+        doYouPlayAnyInstruments().stream()
             .forEach(session::insert);
 
         session.fireAllRules();
@@ -72,10 +77,17 @@ public class Simulation {
 
     }
 
+    private Collection<PlaysInstrument> doYouPlayAnyInstruments() {
+        List<Instrument> suggestedInstruments = sessionObjectsOfType(Instrument.class)
+            .collect(toList());
+
+        return suggestedInstruments.isEmpty()
+            ? Collections.emptyList()
+            : Arrays.asList(new PlaysInstrument(suggestedInstruments.get(0).getId()));
+    }
+
     private Stream<Instrument> suggestInstruments() {
-        return session
-            .getObjects(o -> o instanceof InstrumentSuggestion).stream()
-            .map(o -> (InstrumentSuggestion) o)
+        return sessionObjectsOfType(InstrumentSuggestion.class)
             .map(suggestion -> suggestion.getInstrument());
     }
 
@@ -103,6 +115,10 @@ public class Simulation {
         return session
             .getObjects(type::isInstance).stream()
             .map(type::cast);
+    }
+
+    private Optional<IsNomad> doYouTravelALot() {
+        return Optional.of(new IsNomad());
     }
 
 }

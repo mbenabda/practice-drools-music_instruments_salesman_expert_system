@@ -1,0 +1,10 @@
+import com.mbenabda.techwatch.testES.facts.answers.*
+import com.mbenabda.techwatch.testES.facts.age.*
+
+rule "young people travel"
+when
+    IsYoung()
+    not IsNomad()
+then
+    insert(new IsNomad());
+end

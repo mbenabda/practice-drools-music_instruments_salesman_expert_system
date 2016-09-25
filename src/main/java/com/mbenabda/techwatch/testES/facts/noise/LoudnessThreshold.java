@@ -1,4 +1,4 @@
-package com.mbenabda.techwatch.testES.facts.loudness;
+package com.mbenabda.techwatch.testES.facts.noise;
 
 import java.util.Objects;
 

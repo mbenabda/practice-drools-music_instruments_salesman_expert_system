@@ -4,10 +4,10 @@ import org.apache.commons.lang3.Validate;
 
 import java.util.Objects;
 
-public class IsExpensive {
+public class CanAfford {
     private final String instrumentName;
 
-    public IsExpensive(final String instrumentName) {
+    public CanAfford(final String instrumentName) {
         Validate.notBlank(instrumentName);
         this.instrumentName = instrumentName;
     }
@@ -20,7 +20,7 @@ public class IsExpensive {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        IsExpensive that = (IsExpensive) o;
+        CanAfford that = (CanAfford) o;
         return Objects.equals(instrumentName, that.instrumentName);
     }
 

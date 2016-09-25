@@ -1,5 +1,5 @@
 import com.mbenabda.techwatch.testES.domain.Instrument
-import com.mbenabda.techwatch.testES.facts.loudness.*
+import com.mbenabda.techwatch.testES.facts.noise.*
 
 rule "intrument is silent"
 when

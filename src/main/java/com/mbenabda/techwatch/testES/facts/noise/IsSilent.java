@@ -1,13 +1,13 @@
-package com.mbenabda.techwatch.testES.facts.loudness;
+package com.mbenabda.techwatch.testES.facts.noise;
 
 import org.apache.commons.lang3.Validate;
 
 import java.util.Objects;
 
-public class IsLoud {
+public class IsSilent {
     private final String instrumentName;
 
-    public IsLoud(final String instrumentName) {
+    public IsSilent(final String instrumentName) {
         Validate.notBlank(instrumentName);
         this.instrumentName = instrumentName;
     }
@@ -20,8 +20,8 @@ public class IsLoud {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        IsLoud that = (IsLoud) o;
-        return Objects.equals(instrumentName, that.instrumentName);
+        IsSilent isSilent = (IsSilent) o;
+        return Objects.equals(instrumentName, isSilent.instrumentName);
     }
 
     @Override

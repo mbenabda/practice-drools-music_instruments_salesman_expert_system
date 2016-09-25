@@ -2,7 +2,7 @@ package com.mbenabda.techwatch.testES.config.drools;
 
 import com.mbenabda.techwatch.testES.facts.answers.Age;
 import com.mbenabda.techwatch.testES.facts.age.YouthLimitAge;
-import com.mbenabda.techwatch.testES.facts.loudness.LoudnessThreshold;
+import com.mbenabda.techwatch.testES.facts.noise.LoudnessThreshold;
 import com.mbenabda.techwatch.testES.repository.GenreRepository;
 import com.mbenabda.techwatch.testES.repository.InstrumentRepository;
 import org.kie.api.KieServices;

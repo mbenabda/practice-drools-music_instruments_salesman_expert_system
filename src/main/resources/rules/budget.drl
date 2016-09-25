@@ -1,0 +1,11 @@
+import com.mbenabda.techwatch.testES.domain.Instrument
+import com.mbenabda.techwatch.testES.facts.budget.*
+import com.mbenabda.techwatch.testES.facts.answers.*
+
+rule "can afford intrument"
+when
+    Budget( $threshold: value )
+    $instrument : Instrument( averageLowEndPrice < $threshold)
+then
+    insert(new CanAfford($instrument.getName()));
+end

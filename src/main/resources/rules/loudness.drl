@@ -1,0 +1,20 @@
+import com.mbenabda.techwatch.testES.domain.Instrument
+import com.mbenabda.techwatch.testES.facts.loudness.*
+
+rule "intrument is silent"
+when
+    LoudnessThreshold( $threshold: value )
+    $instrument : Instrument( loudness < $threshold)
+then
+    insert(new IsSilent($instrument.getName()));
+end
+
+rule "intrument is loud"
+when
+    Instrument( $name: name)
+    not IsSilent( instrumentName == $name)
+then
+    insert(new IsLoud($name));
+end
+
+

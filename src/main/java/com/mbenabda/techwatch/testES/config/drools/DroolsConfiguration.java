@@ -2,6 +2,7 @@ package com.mbenabda.techwatch.testES.config.drools;
 
 import com.mbenabda.techwatch.testES.facts.Person;
 import com.mbenabda.techwatch.testES.facts.age.YouthLimitAge;
+import com.mbenabda.techwatch.testES.facts.loudness.LoudnessThreshold;
 import com.mbenabda.techwatch.testES.repository.GenreRepository;
 import com.mbenabda.techwatch.testES.repository.InstrumentRepository;
 import org.kie.api.KieServices;
@@ -50,6 +51,8 @@ public class DroolsConfiguration {
         new LoadedRulesLogger().logRulesLoadedIn(session.getKieBase());
 
         session.insert(new YouthLimitAge(18));
+        session.insert(new LoudnessThreshold(.5f));
+
         genreRepository.findAll().stream().forEach(session::insert);
         instrumentRepository.findAll().stream().forEach(session::insert);
         return session;

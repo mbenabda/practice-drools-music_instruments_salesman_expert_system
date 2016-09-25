@@ -1,7 +1,7 @@
 package com.mbenabda.techwatch.testES.rules;
 
 import com.mbenabda.techwatch.testES.domain.Instrument;
-import com.mbenabda.techwatch.testES.facts.weight.IsTooHeavy;
+import com.mbenabda.techwatch.testES.facts.weight.IsHeavy;
 import com.mbenabda.techwatch.testES.facts.weight.WeightLimit;
 import org.junit.Before;
 import org.junit.Rule;
@@ -15,6 +15,8 @@ import static org.junit.Assert.assertEquals;
 
 public class WeightTest {
     private static final Float WEIGHT_LIMIT = 50F;
+    private static final Long PIANO_ID = 1L;
+    private static final Long TRIANGLE_ID = 2L;
 
     @Rule
     public final StatefulKieSessionRule kie = new StatefulKieSessionRule();
@@ -34,26 +36,26 @@ public class WeightTest {
     @Test
     public void should_be_too_heavy_when_weight_is_over_the_limit() {
         Instrument piano = new Instrument();
-        piano.setName("piano");
+        piano.setId(PIANO_ID);
         piano.setAverageWeight(200f);
 
         kie.session().insert(piano);
         kie.session().fireAllRules();
 
-        Collection<?> inferred = kie.session().getObjects(o -> o instanceof IsTooHeavy);
-        assertArrayEquals(asList(new IsTooHeavy("piano")).toArray(), inferred.toArray());
+        Collection<?> inferred = kie.session().getObjects(o -> o instanceof IsHeavy);
+        assertArrayEquals(asList(new IsHeavy(PIANO_ID)).toArray(), inferred.toArray());
     }
 
     @Test
     public void should_not_be_too_heavy_when_weight_is_under_the_limit() {
         Instrument triangle = new Instrument();
-        triangle.setName("triangle");
+        triangle.setId(TRIANGLE_ID);
         triangle.setAverageWeight(.5f);
 
         kie.session().insert(triangle);
         kie.session().fireAllRules();
 
-        Collection<?> inferred = kie.session().getObjects(o -> o instanceof IsTooHeavy);
-        assertArrayEquals(new IsTooHeavy[0], inferred.toArray());
+        Collection<?> inferred = kie.session().getObjects(o -> o instanceof IsHeavy);
+        assertArrayEquals(new IsHeavy[0], inferred.toArray());
     }
 }

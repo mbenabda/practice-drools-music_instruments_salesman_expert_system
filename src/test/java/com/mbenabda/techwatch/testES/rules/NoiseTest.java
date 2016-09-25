@@ -17,6 +17,8 @@ import static org.junit.Assert.assertEquals;
 public class NoiseTest {
 
     private static final float THRESHOLD = .5f;
+    private static final long TRIANGLE_ID = 1L;
+    private static final Long DRUM_ID = 2L;
 
     @Rule
     public final StatefulKieSessionRule kie = new StatefulKieSessionRule();
@@ -30,27 +32,27 @@ public class NoiseTest {
     @Test
     public void should_infer_instrument_loudness() {
         Instrument drum = new Instrument();
-        drum.setName("drum");
+        drum.setId(DRUM_ID);
         drum.setLoudness(THRESHOLD + 1);
 
         kie.session().insert(drum);
         kie.session().fireAllRules();
 
         Collection<?> inferred = kie.session().getObjects(o -> o instanceof IsLoud);
-        assertArrayEquals(asList(new IsLoud("drum")).toArray(), inferred.toArray());
+        assertArrayEquals(asList(new IsLoud(DRUM_ID)).toArray(), inferred.toArray());
     }
 
     @Test
     public void should_infer_instrument_silent() {
         Instrument triangle = new Instrument();
-        triangle.setName("triangle");
+        triangle.setId(TRIANGLE_ID);
         triangle.setLoudness(THRESHOLD - 1);
 
         kie.session().insert(triangle);
         kie.session().fireAllRules();
 
         Collection<?> inferred = kie.session().getObjects(o -> o instanceof IsSilent);
-        assertArrayEquals(asList(new IsSilent("triangle")).toArray(), inferred.toArray());
+        assertArrayEquals(asList(new IsSilent(TRIANGLE_ID)).toArray(), inferred.toArray());
     }
 
 }

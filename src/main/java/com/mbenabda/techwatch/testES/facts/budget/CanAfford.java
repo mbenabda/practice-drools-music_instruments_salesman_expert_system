@@ -5,15 +5,15 @@ import org.apache.commons.lang3.Validate;
 import java.util.Objects;
 
 public class CanAfford {
-    private final String instrumentName;
+    private final Long instrumentId;
 
-    public CanAfford(final String instrumentName) {
-        Validate.notBlank(instrumentName);
-        this.instrumentName = instrumentName;
+    public CanAfford(final Long instrumentId) {
+        Validate.notNull(instrumentId);
+        this.instrumentId = instrumentId;
     }
 
-    public String getInstrumentName() {
-        return instrumentName;
+    public Long getInstrumentId() {
+        return instrumentId;
     }
 
     @Override
@@ -21,11 +21,11 @@ public class CanAfford {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CanAfford that = (CanAfford) o;
-        return Objects.equals(instrumentName, that.instrumentName);
+        return Objects.equals(instrumentId, that.instrumentId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(instrumentName);
+        return Objects.hash(instrumentId);
     }
 }

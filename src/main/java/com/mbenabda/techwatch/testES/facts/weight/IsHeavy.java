@@ -1,13 +1,13 @@
-package com.mbenabda.techwatch.testES.facts.noise;
+package com.mbenabda.techwatch.testES.facts.weight;
 
 import org.apache.commons.lang3.Validate;
 
 import java.util.Objects;
 
-public class IsSilent {
+public class IsHeavy {
     private final Long instrumentId;
 
-    public IsSilent(final Long instrumentId) {
+    public IsHeavy(final Long instrumentId) {
         Validate.notNull(instrumentId);
         this.instrumentId = instrumentId;
     }
@@ -20,8 +20,8 @@ public class IsSilent {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        IsSilent isSilent = (IsSilent) o;
-        return Objects.equals(instrumentId, isSilent.instrumentId);
+        IsHeavy that = (IsHeavy) o;
+        return Objects.equals(instrumentId, that.instrumentId);
     }
 
     @Override

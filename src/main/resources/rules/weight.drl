@@ -13,5 +13,5 @@ when
     WeightLimit( $limit: value )
     $instrument : Instrument( averageWeight >= $limit)
 then
-    insert(new IsTooHeavy($instrument.getName()));
+    insert(new IsHeavy($instrument.getId()));
 end

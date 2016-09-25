@@ -2,7 +2,7 @@ package com.mbenabda.techwatch.testES.rules;
 
 import com.mbenabda.techwatch.testES.domain.Instrument;
 import com.mbenabda.techwatch.testES.facts.answers.illness.HasBackPain;
-import com.mbenabda.techwatch.testES.facts.weight.IsTooHeavy;
+import com.mbenabda.techwatch.testES.facts.weight.IsHeavy;
 import com.mbenabda.techwatch.testES.facts.weight.WeightLimit;
 import org.junit.Rule;
 import org.junit.Test;
@@ -16,6 +16,7 @@ import static org.junit.Assert.*;
 public class BackPainTest {
 
     private static final Float WEIGHT_LIMIT = 5f;
+    private static final Long TRIANGLE_ID = 1L;
     @Rule
     public final StatefulKieSessionRule kie = new StatefulKieSessionRule();
 
@@ -38,14 +39,14 @@ public class BackPainTest {
     @Test
     public void should_not_be_too_heavy() {
         Instrument triangle = new Instrument();
-        triangle.setName("triangle");
+        triangle.setId(TRIANGLE_ID);
         triangle.setAverageWeight(WEIGHT_LIMIT - 1);
 
         kie.session().insert(triangle);
         kie.session().fireAllRules();
 
-        Collection<?> inferred = kie.session().getObjects(o -> o instanceof IsTooHeavy);
-        assertArrayEquals(new IsTooHeavy[0], inferred.toArray());
+        Collection<?> inferred = kie.session().getObjects(o -> o instanceof IsHeavy);
+        assertArrayEquals(new IsHeavy[0], inferred.toArray());
     }
 
     private Optional<WeightLimit> currentWeightLimit() {

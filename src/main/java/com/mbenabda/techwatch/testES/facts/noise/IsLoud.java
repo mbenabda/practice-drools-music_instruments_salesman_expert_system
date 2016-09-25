@@ -5,15 +5,15 @@ import org.apache.commons.lang3.Validate;
 import java.util.Objects;
 
 public class IsLoud {
-    private final String instrumentName;
+    private final Long instrumentId;
 
-    public IsLoud(final String instrumentName) {
-        Validate.notBlank(instrumentName);
-        this.instrumentName = instrumentName;
+    public IsLoud(final Long instrumentId) {
+        Validate.notNull(instrumentId);
+        this.instrumentId = instrumentId;
     }
 
-    public String getInstrumentName() {
-        return instrumentName;
+    public Long getInstrumentId() {
+        return instrumentId;
     }
 
     @Override
@@ -21,11 +21,11 @@ public class IsLoud {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         IsLoud that = (IsLoud) o;
-        return Objects.equals(instrumentName, that.instrumentName);
+        return Objects.equals(instrumentId, that.instrumentId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(instrumentName);
+        return Objects.hash(instrumentId);
     }
 }

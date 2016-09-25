@@ -6,15 +6,15 @@ when
     LoudnessThreshold( $threshold: value )
     $instrument : Instrument( loudness < $threshold)
 then
-    insert(new IsSilent($instrument.getName()));
+    insert(new IsSilent($instrument.getId()));
 end
 
 rule "intrument is loud"
 when
-    Instrument( $name: name)
-    not IsSilent( instrumentName == $name)
+    Instrument( $id: id)
+    not IsSilent( instrumentId == $id)
 then
-    insert(new IsLoud($name));
+    insert(new IsLoud($id));
 end
 
 

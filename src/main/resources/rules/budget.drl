@@ -7,5 +7,5 @@ when
     Budget( $threshold: value )
     $instrument : Instrument( averageLowEndPrice < $threshold)
 then
-    insert(new CanAfford($instrument.getName()));
+    insert(new CanAfford($instrument.getId()));
 end

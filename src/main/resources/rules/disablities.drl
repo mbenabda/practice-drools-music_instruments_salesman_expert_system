@@ -1,6 +1,6 @@
 import com.mbenabda.techwatch.testES.facts.weight.*
 import com.mbenabda.techwatch.testES.facts.answers.illness.*
-import com.mbenabda.techwatch.testES.facts.BannishCategory
+import com.mbenabda.techwatch.testES.facts.BlacklistedKindOfInstruments
 
 rule "cannot weight heavy instruments with back pain"
 when
@@ -15,5 +15,5 @@ rule "avoid woodwinds if you have breathing issues"
 when
     HasBreathingIssues()
 then
-    insert(new BannishCategory("WOODWINDS"));
+    insert(new BlacklistedKindOfInstruments("WOODWINDS"));
 end

@@ -42,11 +42,11 @@ public class FakeDataInitializer {
         ));
 
         instrumentRepository.save(Arrays.asList(
-            instrument("ACOUSTIC"   , "STRING" , "guitar"   , 1.5f , 80000.0f , 50 , 2 , 2),
-            instrument("ELECTRONIC" , "STRING" , "guitar"   , 1.5f , 80000.0f , 50 , 3 , 5),
-            instrument("ACOUSTIC"   , "DRUM"   , "triangle" , .5f  , 800.0f   , 12 , 1 , 1),
-            instrument("ACOUSTIC"   , "VOICE"  , "beatbox"  , 0    , 0        , 0  , 1 , 1),
-            instrument("ACOUSTIC"   , "VOICE"  , "voice"    , 0    , 0        , 0  , 2 , 5)
+            instrument("ACOUSTIC"   , "STRING" , "guitar"   , 1.5f , 80000.0f , 50 , .3f , 2),
+            instrument("ELECTRONIC" , "STRING" , "guitar"   , 1.5f , 80000.0f , 50 , .5f , 5),
+            instrument("ACOUSTIC"   , "DRUM"   , "triangle" , .5f  , 800.0f   , 12 , 0   , 1),
+            instrument("ACOUSTIC"   , "VOICE"  , "beatbox"  , 0    , 0        , 0  , 0   , 1),
+            instrument("ACOUSTIC"   , "VOICE"  , "voice"    , 0    , 0        , 0  , .2f , 5)
         ));
     }
 

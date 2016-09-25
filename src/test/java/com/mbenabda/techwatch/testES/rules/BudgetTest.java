@@ -15,6 +15,8 @@ import static org.junit.Assert.assertEquals;
 
 public class BudgetTest {
     private static final float BUDGET = 100;
+    private static final long TRIANGLE_ID = 1L;
+    private static final Long DRUM_ID = 2L;
 
     @Rule
     public final StatefulKieSessionRule kie = new StatefulKieSessionRule();
@@ -28,7 +30,7 @@ public class BudgetTest {
     @Test
     public void cannot_afford_instruments_over_budget() {
         Instrument drum = new Instrument();
-        drum.setName("drum");
+        drum.setId(DRUM_ID);
         drum.setAverageLowEndPrice(BUDGET + 1);
 
         kie.session().insert(drum);
@@ -41,14 +43,14 @@ public class BudgetTest {
     @Test
     public void can_afford_instrument_under_budget() {
         Instrument triangle = new Instrument();
-        triangle.setName("triangle");
+        triangle.setId(TRIANGLE_ID);
         triangle.setAverageLowEndPrice(BUDGET - 1);
 
         kie.session().insert(triangle);
         kie.session().fireAllRules();
 
         Collection<?> inferred = kie.session().getObjects(o -> o instanceof CanAfford);
-        assertArrayEquals(asList(new CanAfford("triangle")).toArray(), inferred.toArray());
+        assertArrayEquals(asList(new CanAfford(TRIANGLE_ID)).toArray(), inferred.toArray());
     }
 
 }

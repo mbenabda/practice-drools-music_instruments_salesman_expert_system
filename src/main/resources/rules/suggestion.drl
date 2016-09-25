@@ -1,0 +1,21 @@
+import com.mbenabda.techwatch.testES.domain.*
+import com.mbenabda.techwatch.testES.facts.suggestion.*
+import com.mbenabda.techwatch.testES.facts.weight.*
+import com.mbenabda.techwatch.testES.facts.budget.*
+import com.mbenabda.techwatch.testES.facts.dedication.*
+import com.mbenabda.techwatch.testES.facts.storage.*
+import com.mbenabda.techwatch.testES.facts.*
+rule "make suggestions"
+when
+    $instrument: Instrument()
+    CanAfford(instrumentId == $instrument.id)
+    not TakesTooMuchTimeToLearn(instrumentId == $instrument.id)
+    not BlacklistedKindOfInstruments(kindCode == $instrument.kind)
+    not PlaysInstrument(instrumentId == $instrument.id)
+    not TakesTooMuchSpace(instrumentId == $instrument.id)
+//    (sedentary || (nomad && not IsHeavy(instrumentId == $instrument.name)))
+//    not IsTooLoud((instrumentId == $instrument.name)
+//    not BlacklistedCategoryOfInstruments(categoryCode == $instrument.category)
+then
+    insert(new Suggestion($instrument));
+end

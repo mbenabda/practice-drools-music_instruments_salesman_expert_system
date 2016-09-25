@@ -96,6 +96,8 @@
                         entity: function () {
                             return {
                                 code: null,
+                                goldenAgeStartingYear: null,
+                                goldenAgeEndingYear: null,
                                 id: null
                             };
                         }

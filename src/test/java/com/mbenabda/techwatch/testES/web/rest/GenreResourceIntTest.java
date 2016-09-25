@@ -42,6 +42,12 @@ public class GenreResourceIntTest {
     private static final String DEFAULT_CODE = "AAAAA";
     private static final String UPDATED_CODE = "BBBBB";
 
+    private static final Integer DEFAULT_GOLDEN_AGE_STARTING_YEAR = 1;
+    private static final Integer UPDATED_GOLDEN_AGE_STARTING_YEAR = 2;
+
+    private static final Integer DEFAULT_GOLDEN_AGE_ENDING_YEAR = 1;
+    private static final Integer UPDATED_GOLDEN_AGE_ENDING_YEAR = 2;
+
     @Inject
     private GenreRepository genreRepository;
 
@@ -76,7 +82,9 @@ public class GenreResourceIntTest {
      */
     public static Genre createEntity(EntityManager em) {
         Genre genre = new Genre()
-                .code(DEFAULT_CODE);
+                .code(DEFAULT_CODE)
+                .goldenAgeStartingYear(DEFAULT_GOLDEN_AGE_STARTING_YEAR)
+                .goldenAgeEndingYear(DEFAULT_GOLDEN_AGE_ENDING_YEAR);
         return genre;
     }
 
@@ -102,6 +110,8 @@ public class GenreResourceIntTest {
         assertThat(genres).hasSize(databaseSizeBeforeCreate + 1);
         Genre testGenre = genres.get(genres.size() - 1);
         assertThat(testGenre.getCode()).isEqualTo(DEFAULT_CODE);
+        assertThat(testGenre.getGoldenAgeStartingYear()).isEqualTo(DEFAULT_GOLDEN_AGE_STARTING_YEAR);
+        assertThat(testGenre.getGoldenAgeEndingYear()).isEqualTo(DEFAULT_GOLDEN_AGE_ENDING_YEAR);
     }
 
     @Test
@@ -133,7 +143,9 @@ public class GenreResourceIntTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(genre.getId().intValue())))
-                .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())));
+                .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
+                .andExpect(jsonPath("$.[*].goldenAgeStartingYear").value(hasItem(DEFAULT_GOLDEN_AGE_STARTING_YEAR)))
+                .andExpect(jsonPath("$.[*].goldenAgeEndingYear").value(hasItem(DEFAULT_GOLDEN_AGE_ENDING_YEAR)));
     }
 
     @Test
@@ -147,7 +159,9 @@ public class GenreResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(genre.getId().intValue()))
-            .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()));
+            .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()))
+            .andExpect(jsonPath("$.goldenAgeStartingYear").value(DEFAULT_GOLDEN_AGE_STARTING_YEAR))
+            .andExpect(jsonPath("$.goldenAgeEndingYear").value(DEFAULT_GOLDEN_AGE_ENDING_YEAR));
     }
 
     @Test
@@ -168,7 +182,9 @@ public class GenreResourceIntTest {
         // Update the genre
         Genre updatedGenre = genreRepository.findOne(genre.getId());
         updatedGenre
-                .code(UPDATED_CODE);
+                .code(UPDATED_CODE)
+                .goldenAgeStartingYear(UPDATED_GOLDEN_AGE_STARTING_YEAR)
+                .goldenAgeEndingYear(UPDATED_GOLDEN_AGE_ENDING_YEAR);
 
         restGenreMockMvc.perform(put("/api/genres")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -180,6 +196,8 @@ public class GenreResourceIntTest {
         assertThat(genres).hasSize(databaseSizeBeforeUpdate);
         Genre testGenre = genres.get(genres.size() - 1);
         assertThat(testGenre.getCode()).isEqualTo(UPDATED_CODE);
+        assertThat(testGenre.getGoldenAgeStartingYear()).isEqualTo(UPDATED_GOLDEN_AGE_STARTING_YEAR);
+        assertThat(testGenre.getGoldenAgeEndingYear()).isEqualTo(UPDATED_GOLDEN_AGE_ENDING_YEAR);
     }
 
     @Test

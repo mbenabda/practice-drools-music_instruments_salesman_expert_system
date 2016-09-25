@@ -8,6 +8,14 @@
             "fieldValidateRules": [
                 "required"
             ]
+        },
+        {
+            "fieldName": "goldenAgeStartingYear",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "goldenAgeEndingYear",
+            "fieldType": "Integer"
         }
     ],
     "changelogDate": "20160925005836",

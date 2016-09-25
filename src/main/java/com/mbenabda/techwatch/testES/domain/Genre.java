@@ -23,6 +23,12 @@ public class Genre implements Serializable {
     @Column(name = "code", nullable = false)
     private String code;
 
+    @Column(name = "golden_age_starting_year")
+    private Integer goldenAgeStartingYear;
+
+    @Column(name = "golden_age_ending_year")
+    private Integer goldenAgeEndingYear;
+
     public Long getId() {
         return id;
     }
@@ -42,6 +48,32 @@ public class Genre implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public Integer getGoldenAgeStartingYear() {
+        return goldenAgeStartingYear;
+    }
+
+    public Genre goldenAgeStartingYear(Integer goldenAgeStartingYear) {
+        this.goldenAgeStartingYear = goldenAgeStartingYear;
+        return this;
+    }
+
+    public void setGoldenAgeStartingYear(Integer goldenAgeStartingYear) {
+        this.goldenAgeStartingYear = goldenAgeStartingYear;
+    }
+
+    public Integer getGoldenAgeEndingYear() {
+        return goldenAgeEndingYear;
+    }
+
+    public Genre goldenAgeEndingYear(Integer goldenAgeEndingYear) {
+        this.goldenAgeEndingYear = goldenAgeEndingYear;
+        return this;
+    }
+
+    public void setGoldenAgeEndingYear(Integer goldenAgeEndingYear) {
+        this.goldenAgeEndingYear = goldenAgeEndingYear;
     }
 
     @Override
@@ -69,6 +101,8 @@ public class Genre implements Serializable {
         return "Genre{" +
             "id=" + id +
             ", code='" + code + "'" +
+            ", goldenAgeStartingYear='" + goldenAgeStartingYear + "'" +
+            ", goldenAgeEndingYear='" + goldenAgeEndingYear + "'" +
             '}';
     }
 }

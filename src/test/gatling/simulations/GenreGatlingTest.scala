@@ -67,7 +67,7 @@ class GenreGatlingTest extends Simulation {
             .exec(http("Create new genre")
             .post("/api/genres")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "code":"SAMPLE_TEXT"}""")).asJSON
+            .body(StringBody("""{"id":null, "code":"SAMPLE_TEXT", "goldenAgeStartingYear":"0", "goldenAgeEndingYear":"0"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_genre_url"))).exitHereIfFailed
             .pause(10)

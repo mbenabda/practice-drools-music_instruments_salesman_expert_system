@@ -1,9 +1,9 @@
 package com.mbenabda.techwatch.testES.rules;
 
 import com.mbenabda.techwatch.testES.domain.Instrument;
-import com.mbenabda.techwatch.testES.facts.loudness.IsLoud;
-import com.mbenabda.techwatch.testES.facts.loudness.IsSilent;
-import com.mbenabda.techwatch.testES.facts.loudness.LoudnessThreshold;
+import com.mbenabda.techwatch.testES.facts.budget.Budget;
+import com.mbenabda.techwatch.testES.facts.budget.IsCheap;
+import com.mbenabda.techwatch.testES.facts.budget.IsExpensive;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -14,9 +14,9 @@ import static org.codehaus.groovy.runtime.InvokerHelper.asList;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
-public class LoudnessTest {
+public class ExpensivenessTest {
 
-    private static final float THRESHOLD = .5f;
+    private static final float BUDGET = 100;
 
     @Rule
     public final StatefulKieSessionRule kie = new StatefulKieSessionRule();
@@ -24,33 +24,33 @@ public class LoudnessTest {
     @Before
     public void setUp() {
         assertEquals(0, kie.session().getFactCount());
-        kie.session().insert(new LoudnessThreshold(THRESHOLD));
+        kie.session().insert(new Budget(BUDGET));
     }
 
     @Test
-    public void should_infer_instrument_loudness() {
+    public void should_infer_instrument_expensiveness() {
         Instrument drum = new Instrument();
         drum.setName("drum");
-        drum.setLoudness(THRESHOLD + 1);
+        drum.setAverageLowEndPrice(BUDGET + 1);
 
         kie.session().insert(drum);
         kie.session().fireAllRules();
 
-        Collection<?> inferred = kie.session().getObjects(o -> o instanceof IsLoud);
-        assertArrayEquals(asList(new IsLoud("drum")).toArray(), inferred.toArray());
+        Collection<?> inferred = kie.session().getObjects(o -> o instanceof IsExpensive);
+        assertArrayEquals(asList(new IsExpensive("drum")).toArray(), inferred.toArray());
     }
 
     @Test
-    public void should_infer_instrument_silent() {
+    public void should_infer_instrument_cheapness() {
         Instrument triangle = new Instrument();
         triangle.setName("triangle");
-        triangle.setLoudness(THRESHOLD - 1);
+        triangle.setAverageLowEndPrice(BUDGET - 1);
 
         kie.session().insert(triangle);
         kie.session().fireAllRules();
 
-        Collection<?> inferred = kie.session().getObjects(o -> o instanceof IsSilent);
-        assertArrayEquals(asList(new IsSilent("triangle")).toArray(), inferred.toArray());
+        Collection<?> inferred = kie.session().getObjects(o -> o instanceof IsCheap);
+        assertArrayEquals(asList(new IsCheap("triangle")).toArray(), inferred.toArray());
     }
 
 }

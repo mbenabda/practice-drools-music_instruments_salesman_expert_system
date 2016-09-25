@@ -30,7 +30,6 @@ public class AgeTest {
         kie.session().fireAllRules();
 
         Collection<?> inferred = kie.session().getObjects(o -> o instanceof IsYoung);
-        assertEquals(3, kie.session().getFactCount());
         assertEquals(1, inferred.size());
     }
 
@@ -41,7 +40,6 @@ public class AgeTest {
         kie.session().fireAllRules();
 
         Collection<?> inferred = kie.session().getObjects(o -> o instanceof IsOld);
-        assertEquals(3, kie.session().getFactCount());
         assertEquals(1, inferred.size());
     }
 }

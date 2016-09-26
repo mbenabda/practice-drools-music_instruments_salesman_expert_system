@@ -15,5 +15,6 @@ rule "avoid woodwinds if you have breathing issues"
 when
     HasBreathingIssues()
 then
-    insert(new BlacklistedKindOfInstruments("WOODWINDS"));
+    insert(new BlacklistedKindOfInstruments("WOODWIND"));
+    insert(new BlacklistedKindOfInstruments("BRASS"));
 end

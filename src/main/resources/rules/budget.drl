@@ -5,7 +5,7 @@ import com.mbenabda.techwatch.testES.facts.answers.*
 rule "can afford instrument"
 when
     Budget( $threshold: value )
-    $instrument : Instrument( averageLowEndPrice < $threshold)
+    $instrument : Instrument( averageLowEndPrice <= $threshold)
 then
     insert(new CanAfford($instrument.getId()));
 end

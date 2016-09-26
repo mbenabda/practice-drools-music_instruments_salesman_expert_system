@@ -14,7 +14,8 @@ end
 rule "big instruments are not appropriate for appartments"
 when
     LivesInAnAppartment()
-    TakesALotOfSpace($instrumentId: instrumentId)
+    $instrument: Instrument()
+    TakesALotOfSpace(instrumentId == $instrument.id)
 then
-    insert(new TakesTooMuchSpace($instrumentId));
+    insert(new TakesTooMuchSpace($instrument.getId()));
 end

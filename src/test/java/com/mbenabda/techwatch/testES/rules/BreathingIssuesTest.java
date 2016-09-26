@@ -21,7 +21,7 @@ public class BreathingIssuesTest {
         kie.session().insert(new HasBreathingIssues());
         kie.session().fireAllRules();
         Collection<?> inferred = kie.session().getObjects(o -> o instanceof BlacklistedKindOfInstruments);
-        assertArrayEquals(blackList("WOODWINDS"), inferred.toArray());
+        assertArrayEquals(blackList("WOODWIND", "BRASS"), inferred.toArray());
     }
 
     private BlacklistedKindOfInstruments[] blackList(String... kindOfInstruments) {

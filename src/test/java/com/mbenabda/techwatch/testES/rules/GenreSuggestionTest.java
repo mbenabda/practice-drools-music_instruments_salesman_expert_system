@@ -12,12 +12,14 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class GenreSuggestionTest {
 
 
     private static final int MAJORITY = 18;
     private static final LocalDate _1940 = LocalDate.of(1940, 01, 01);
+    private static final LocalDate _1945 = LocalDate.of(1945, 01, 01);
     private static final LocalDate _1965 = LocalDate.of(1965, 01, 01);
     private static final LocalDate _1985 = LocalDate.of(1985, 01, 01);
     private static final Long GENRE_ID = 1L;
@@ -30,6 +32,7 @@ public class GenreSuggestionTest {
         assertEquals(0, kie.session().getFactCount());
         kie.session().insert(new YouthLimitAge(MAJORITY));
     }
+
     @Test
     public void people_probably_like_genres_that_were_popular_when_they_were_young_adults() {
         Genre genre = new Genre();
@@ -42,7 +45,37 @@ public class GenreSuggestionTest {
         kie.session().fireAllRules();
 
         Optional<GenreSuggestion> first = kie.session().getObjects(o -> o instanceof GenreSuggestion).stream().map(o -> (GenreSuggestion) o).findFirst();
-        assertEquals(new GenreSuggestion(genre), first.get());
+        assertEquals(new GenreSuggestion(GENRE_ID), first.get());
+    }
+
+    @Test
+    public void people_dont_necessary_like_genres_that_were_popular_when_they_were_too_young() {
+        Genre genre = new Genre();
+        genre.setId(GENRE_ID);
+        genre.setGoldenAgeStartingYear(_1945.getYear());
+        genre.setGoldenAgeEndingYear(_1945.getYear());
+
+        kie.session().insert(new DateOfBirth(_1940));
+        kie.session().insert(genre);
+        kie.session().fireAllRules();
+
+        Optional<GenreSuggestion> first = kie.session().getObjects(o -> o instanceof GenreSuggestion).stream().map(o -> (GenreSuggestion) o).findFirst();
+        assertFalse(first.isPresent());
+    }
+
+    @Test
+    public void people_dont_necessary_like_genres_that_were_popular_when_they_were_too_old() {
+        Genre genre = new Genre();
+        genre.setId(GENRE_ID);
+        genre.setGoldenAgeStartingYear(_1985.getYear());
+        genre.setGoldenAgeEndingYear(_1985.getYear());
+
+        kie.session().insert(new DateOfBirth(_1940));
+        kie.session().insert(genre);
+        kie.session().fireAllRules();
+
+        Optional<GenreSuggestion> first = kie.session().getObjects(o -> o instanceof GenreSuggestion).stream().map(o -> (GenreSuggestion) o).findFirst();
+        assertFalse(first.isPresent());
     }
 
 }

@@ -6,15 +6,15 @@ import org.apache.commons.lang3.Validate;
 import java.util.Objects;
 
 public class GenreSuggestion {
-    private final Genre genre;
+    private final Long genreId;
 
-    public GenreSuggestion(Genre genre) {
-        Validate.notNull(genre);
-        this.genre = genre;
+    public GenreSuggestion(Long genreId) {
+        Validate.notNull(genreId);
+        this.genreId = genreId;
     }
 
-    public Genre getGenre() {
-        return genre;
+    public Long getGenreId() {
+        return genreId;
     }
 
     @Override
@@ -22,11 +22,11 @@ public class GenreSuggestion {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GenreSuggestion that = (GenreSuggestion) o;
-        return Objects.equals(genre, that.genre);
+        return Objects.equals(genreId, that.genreId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(genre);
+        return Objects.hash(genreId);
     }
 }

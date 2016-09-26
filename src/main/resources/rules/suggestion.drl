@@ -17,18 +17,21 @@ when
     $genre: Genre()
     eval(wasYoungAdultDuringGoldenAge($dob, $genre))
 then
-    insert(new GenreSuggestion($genre));
+    insert(new GenreSuggestion($genre.getId()));
 end
 
 rule "suggest instruments"
 when
+    String(this == "suggest")
     $instrument: Instrument()
+    $genre: Genre()
     not InstrumentSuggestion(instrument == $instrument)
-    CanAfford(instrumentId == $instrument.id)
-    LikesGenre($genreId : genreId)
-    CharacteristicInstrument(genreId == $genreId, instrumentId == $instrument.id)
     not BlacklistedKindOfInstruments(kindCode == $instrument.kind)
     not PlaysInstrument(instrumentId == $instrument.id)
+    CharacteristicInstrument(genreId == $genre.id, instrumentId == $instrument.id)
+    GenreSuggestion(genreId == $genre.id)
+    LikesGenre(genreId == $genre.id)
+    CanAfford(instrumentId == $instrument.id)
     not IsTooHeavy(instrumentId == $instrument.id)
     not IsTooLoud(instrumentId == $instrument.id)
     not TakesTooMuchTimeToLearn(instrumentId == $instrument.id)
@@ -41,8 +44,7 @@ function boolean wasYoungAdultDuringGoldenAge(DateOfBirth dob, Genre g) {
     Integer yearOfBirth = dob.getValue().getYear();
     int yearOfTwenty = yearOfBirth + 20;
     int yearOfThirty = yearOfBirth + 30;
-    return (g.getGoldenAgeStartingYear() >= yearOfTwenty && g.getGoldenAgeEndingYear() <= yearOfThirty)
-        || (yearOfTwenty <= g.getGoldenAgeStartingYear() && g.getGoldenAgeStartingYear() <= yearOfThirty)
-        || (yearOfTwenty <= g.getGoldenAgeEndingYear() && g.getGoldenAgeEndingYear() <= yearOfThirty)
-        ;
+
+    return yearOfTwenty <= g.getGoldenAgeEndingYear()
+        && yearOfThirty >= g.getGoldenAgeStartingYear();
 }

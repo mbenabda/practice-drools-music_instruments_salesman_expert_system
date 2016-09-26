@@ -1,0 +1,107 @@
+//
+//import com.mbenabda.techwatch.testES.domain.*
+//import com.mbenabda.techwatch.testES.facts.*
+//import com.mbenabda.techwatch.testES.facts.age.*
+//import com.mbenabda.techwatch.testES.facts.answers.*
+//import com.mbenabda.techwatch.testES.facts.answers.lifestyle.*
+//import com.mbenabda.techwatch.testES.facts.answers.illness.*
+//import com.mbenabda.techwatch.testES.facts.budget.*
+//import com.mbenabda.techwatch.testES.facts.dedication.*
+//import com.mbenabda.techwatch.testES.facts.instruments.*
+//import com.mbenabda.techwatch.testES.facts.noise.*
+//import com.mbenabda.techwatch.testES.facts.storage.*
+//import com.mbenabda.techwatch.testES.facts.suggestion.*
+//import com.mbenabda.techwatch.testES.facts.weight.*
+//
+//rule "LOG IsYoung"
+//when
+//    IsYoung()
+//then
+//    System.out.println("IsYoung");
+//end
+//
+//rule "LOG PlaysInstrument"
+//when
+//    $instrument : Instrument()
+//    PlaysInstrument(instrumentId == $instrument.id)
+//then
+//     System.out.println("PlaysInstrument " + $instrument.getCategory() + " " + $instrument.getName());
+//end
+//
+//rule "LOG CanAfford"
+//when
+//    $instrument : Instrument()
+//    CanAfford(instrumentId == $instrument.id)
+//then
+//     System.out.println("CanAfford " + $instrument.getCategory() + " " + $instrument.getName());
+//end
+//
+//rule "LOG BlacklistedKindOfInstruments"
+//when
+//    BlacklistedKindOfInstruments($kind: kindCode)
+//then
+//     System.out.println("BlacklistedKindOfInstruments " + $kind);
+//end
+//
+//rule "LOG TakesTooMuchTimeToLearn"
+//when
+//    $instrument : Instrument()
+//    TakesTooMuchTimeToLearn(instrumentId == $instrument.id)
+//then
+//     System.out.println("TakesTooMuchTimeToLearn " + $instrument.getCategory() + " " + $instrument.getName());
+//end
+//
+//rule "LOG IsTooLoud"
+//when
+//    $instrument : Instrument()
+//    IsTooLoud(instrumentId == $instrument.id)
+//then
+//     System.out.println("IsTooLoud " + $instrument.getCategory() + " " + $instrument.getName());
+//end
+//
+//rule "LOG IsTooHeavy"
+//when
+//    $instrument : Instrument()
+//    IsTooHeavy(instrumentId == $instrument.id)
+//then
+//     System.out.println("IsTooHeavy " + $instrument.getCategory() + " " + $instrument.getName());
+//end
+//
+//rule "LOG TakesTooMuchSpace"
+//when
+//    $instrument : Instrument()
+//    TakesTooMuchSpace(instrumentId == $instrument.id)
+//then
+//     System.out.println("TakesTooMuchSpace " + $instrument.getCategory() + " " + $instrument.getName());
+//end
+//
+//rule "LOG InstrumentSuggestion"
+//when
+//    $instrument : Instrument()
+//    InstrumentSuggestion(instrument == $instrument)
+//then
+//     System.out.println("InstrumentSuggestion " + $instrument.getCategory() + " " + $instrument.getName());
+//end
+//
+//rule "LOG LikesGenre"
+//when
+//    $genre : Genre()
+//    LikesGenre(genreId == $genre.id)
+//then
+//     System.out.println("LikesGenre " + $genre.getCode());
+//end
+//
+//
+//rule "LOG CharacteristicInstrument"
+//when
+//    $genre : Genre()
+//    $instrument : Instrument()
+//    CharacteristicInstrument(instrumentId == $instrument.id, genreId == $genre.id)
+//then
+//     System.out.println("CharacteristicInstrument " + $instrument.getCategory() + " " + $instrument.getName() + " is caracteristic of " + $genre.getCode());
+//end
+//
+//
+//
+//
+//

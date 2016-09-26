@@ -9,8 +9,8 @@ import com.mbenabda.techwatch.testES.facts.answers.Budget;
 import com.mbenabda.techwatch.testES.facts.answers.DateOfBirth;
 import com.mbenabda.techwatch.testES.facts.answers.IsNomad;
 import com.mbenabda.techwatch.testES.facts.answers.LikesGenre;
-import com.mbenabda.techwatch.testES.facts.answers.illness.HasBackPain;
 import com.mbenabda.techwatch.testES.facts.answers.lifestyle.DedicatedHoursOfPracticePerWeek;
+import com.mbenabda.techwatch.testES.facts.answers.lifestyle.LivesInAHouse;
 import com.mbenabda.techwatch.testES.facts.answers.lifestyle.LivesInAnAppartment;
 import com.mbenabda.techwatch.testES.facts.suggestion.InstrumentSuggestion;
 import com.mbenabda.techwatch.testES.repository.GenreRepository;
@@ -48,10 +48,11 @@ public class Simulation {
     GenreRepository genres;
 
     private DedicatedHoursOfPracticePerWeek howMuchHoursPerWeekCouldYouDedicateToPractice() {
-        return new DedicatedHoursOfPracticePerWeek(2);
+        return new DedicatedHoursOfPracticePerWeek(35);
     }
 
     private Object whereDoYouLive() {
+//        return new LivesInAHouse();
         return new LivesInAnAppartment();
     }
 
@@ -64,12 +65,12 @@ public class Simulation {
     }
 
     private Budget howMuchWouldYouSpendInAStudyInstrument() {
-        return new Budget(100);
+        return new Budget(150);
     }
 
     private Collection<?> doYouHaveAnyHealthIssue() {
         return Arrays.asList(
-            new HasBackPain()
+//            new HasBackPain()
         );
     }
 
@@ -91,7 +92,8 @@ public class Simulation {
     }
 
     private Optional<IsNomad> doYouTravelALot() {
-        return Optional.of(new IsNomad());
+//        return Optional.of(new IsNomad());
+        return Optional.empty();
     }
 
 
@@ -99,10 +101,15 @@ public class Simulation {
     public void suggest_instruments() {
         Arrays.asList(
             howOldAreYou(),
-            doYouHaveAnyHealthIssue(),
             howMuchWouldYouSpendInAStudyInstrument()
-        ).stream()
+        )
+            .stream()
             .forEach(session::insert);
+
+        doYouHaveAnyHealthIssue()
+            .stream()
+            .forEach(session::insert);
+
 
         doYouTravelALot().ifPresent(session::insert);
 
@@ -124,10 +131,14 @@ public class Simulation {
 
         session.fireAllRules();
 
+        session.insert("suggest");
+
+        session.fireAllRules();
+
         LOG.info(
-            "\n suggestions : {}\n",
+            "\n\nsuggestions : \n---------------\n{}\n\n",
             Joiner.on("\n").join(
-                suggestInstruments()
+                suggestedInstruments()
                 .map(instrument -> instrument.getCategory() + " " + instrument.getName())
                 .collect(toList())
             )
@@ -135,7 +146,7 @@ public class Simulation {
 
     }
 
-    private Stream<Instrument> suggestInstruments() {
+    private Stream<Instrument> suggestedInstruments() {
         return sessionObjectsOfType(InstrumentSuggestion.class)
             .map(suggestion -> suggestion.getInstrument());
     }

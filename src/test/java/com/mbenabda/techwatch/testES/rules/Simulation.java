@@ -5,17 +5,16 @@ import com.mbenabda.techwatch.testES.TestEsApp;
 import com.mbenabda.techwatch.testES.domain.Genre;
 import com.mbenabda.techwatch.testES.domain.Instrument;
 import com.mbenabda.techwatch.testES.facts.PlaysInstrument;
-import com.mbenabda.techwatch.testES.facts.age.YouthLimitAge;
 import com.mbenabda.techwatch.testES.facts.answers.Budget;
 import com.mbenabda.techwatch.testES.facts.answers.DateOfBirth;
+import com.mbenabda.techwatch.testES.facts.answers.IsNomad;
 import com.mbenabda.techwatch.testES.facts.answers.LikesGenre;
 import com.mbenabda.techwatch.testES.facts.answers.illness.HasBackPain;
-import com.mbenabda.techwatch.testES.facts.answers.IsNomad;
 import com.mbenabda.techwatch.testES.facts.answers.lifestyle.DedicatedHoursOfPracticePerWeek;
 import com.mbenabda.techwatch.testES.facts.answers.lifestyle.LivesInAnAppartment;
-import com.mbenabda.techwatch.testES.facts.noise.LoudnessThreshold;
-import com.mbenabda.techwatch.testES.facts.suggestion.GenreSuggestion;
 import com.mbenabda.techwatch.testES.facts.suggestion.InstrumentSuggestion;
+import com.mbenabda.techwatch.testES.repository.GenreRepository;
+import com.mbenabda.techwatch.testES.repository.InstrumentRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kie.api.runtime.KieSession;
@@ -26,7 +25,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.inject.Inject;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
@@ -40,6 +41,11 @@ public class Simulation {
     @Inject
     KieSession session;
 
+    @Inject
+    InstrumentRepository instruments;
+
+    @Inject
+    GenreRepository genres;
 
     private DedicatedHoursOfPracticePerWeek howMuchHoursPerWeekCouldYouDedicateToPractice() {
         return new DedicatedHoursOfPracticePerWeek(2);
@@ -50,16 +56,15 @@ public class Simulation {
     }
 
     private Collection<PlaysInstrument> doYouPlayAnyInstruments() {
-        List<Instrument> suggestedInstruments = sessionObjectsOfType(Instrument.class)
-            .collect(toList());
+        Instrument mpc = instruments.findByCategoryAndName("ELECTRONIC", "MPC");
 
-        return suggestedInstruments.isEmpty()
-            ? Collections.emptyList()
-            : Arrays.asList(new PlaysInstrument(suggestedInstruments.get(0).getId()));
+        return Arrays.asList(
+            new PlaysInstrument(mpc.getId())
+        );
     }
 
     private Budget howMuchWouldYouSpendInAStudyInstrument() {
-        return new Budget(80);
+        return new Budget(100);
     }
 
     private Collection<?> doYouHaveAnyHealthIssue() {
@@ -72,10 +77,17 @@ public class Simulation {
         return new DateOfBirth(LocalDate.of(1988, 7, 18));
     }
 
+
     private Collection<Genre> pickGenresYouLikeFromSuggestedGenres() {
-        return sessionObjectsOfType(GenreSuggestion.class)
-            .map(suggestion -> suggestion.getGenre())
-            .collect(toList());
+        return Arrays.asList(
+            "pop",
+            "soul",
+            "blues",
+            "ska/raggae",
+            "a capella"
+        ).stream()
+        .map(genres::findByCode)
+        .collect(toList());
     }
 
     private Optional<IsNomad> doYouTravelALot() {

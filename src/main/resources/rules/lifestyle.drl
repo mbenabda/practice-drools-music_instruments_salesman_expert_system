@@ -12,7 +12,6 @@ then
     insert(new IsNomad());
 end
 
-
 rule "do not suggest instruments that require more time than available"
 when
     DedicatedHoursOfPracticePerWeek($freeHours: value)

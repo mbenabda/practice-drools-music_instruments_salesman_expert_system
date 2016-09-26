@@ -22,21 +22,22 @@ public class FakeDataInitializer {
 
     public void init() {
         instrumentRepository.save(Arrays.asList(
-            instrument("ACOUSTIC"   , "KEYBOARD" , "piano"     , 1.5f , 80000.0f , 50 , .3f , 2) ,
-            instrument("ACOUSTIC"   , "WOODWIND" , "accordion" , 1.5f , 80000.0f , 50 , .3f , 2) ,
-            instrument("ACOUSTIC"   , "STRING"   , "guitar"    , 1.5f , 80000.0f , 50 , .3f , 2) ,
-            instrument("ACOUSTIC"   , "STRING"   , "violin"    , 1.5f , 80000.0f , 50 , .3f , 2) ,
-            instrument("ACOUSTIC"   , "STRING"   , "viola"     , 1.5f , 80000.0f , 50 , .3f , 2) ,
-            instrument("ACOUSTIC"   , "STRING"   , "cello"     , 1.5f , 80000.0f , 50 , .3f , 2) ,
-            instrument("ACOUSTIC"   , "STRING"   , "bass"      , 1.5f , 80000.0f , 50 , .3f , 2) ,
-            instrument("ACOUSTIC"   , "BRASS"    , "trumpet"   , 1.5f , 80000.0f , 50 , .3f , 2) ,
-            instrument("ACOUSTIC"   , "DRUM"     , "triangle"  , .5f  , 800.0f   , 12 , 0   , 1) ,
-            instrument("ACOUSTIC"   , "DRUM"     , "drumkit"   , .5f  , 800.0f   , 12 , 0   , 1) ,
-            instrument("ACOUSTIC"   , "DRUM"     , "tam tam"   , .5f  , 800.0f   , 12 , 0   , 1) ,
-            instrument("ACOUSTIC"   , "VOICE"    , "voice"     , 0    , 0        , 0  , .2f , 5) ,
-            instrument("ELECTRONIC" , "KEYBOARD" , "keyboard"  , 1.5f , 80000.0f , 50 , .3f , 2) ,
-            instrument("ELECTRONIC" , "DRUM"     , "MPC"       , .5f  , 800.0f   , 12 , 0   , 1) ,
-            instrument("ELECTRONIC" , "STRING"   , "guitar"    , 1.5f , 80000.0f , 50 , .5f , 5)
+//                       category    , kind       , name        , weight , volume , price , loudness , requiredHoursOfPracticePerWeek
+            instrument( "ACOUSTIC"   , "KEYBOARD" , "piano"     , 200f   , 4.8f   , 400   , .3f      , 8) ,
+            instrument( "ACOUSTIC"   , "WOODWIND" , "accordion" , 5f     , 0.135f , 75    , .6f      , 4) ,
+            instrument( "ACOUSTIC"   , "STRING"   , "guitar"    , 2f     , .11f   , 50    , .3f      , 2) ,
+            instrument( "ACOUSTIC"   , "STRING"   , "violin"    , 1f     , .7f    , 100   , .3f      , 5) ,
+            instrument( "ACOUSTIC"   , "STRING"   , "viola"     , 1.5f   , .9f    , 120   , .3f      , 5) ,
+            instrument( "ACOUSTIC"   , "STRING"   , "cello"     , 8f     , .22f   , 175   , .2f      , 5) ,
+            instrument( "ACOUSTIC"   , "STRING"   , "bass"      , 2f     , .11f   , 100   , .1f      , 4) ,
+            instrument( "ACOUSTIC"   , "BRASS"    , "trumpet"   , 1.5f   , .016f  , 150   , .7f      , 8) ,
+            instrument( "ACOUSTIC"   , "DRUM"     , "triangle"  , .25f   , .0003f , 12    , .1f      , 1) ,
+            instrument( "ACOUSTIC"   , "DRUM"     , "drumkit"   , 85f    , 4.5f   , 250   , .9f      , 4) ,
+            instrument( "ACOUSTIC"   , "DRUM"     , "djembe"    , 30f    , .3f    , 150   , .7f      , 2) ,
+            instrument( "ACOUSTIC"   , "VOICE"    , "voice"     , 0      , 0      , 0     , .4f      , 7) ,
+            instrument( "ELECTRONIC" , "KEYBOARD" , "keyboard"  , 4f     , .22f   , 40    , .3f      , 5) ,
+            instrument( "ELECTRONIC" , "DRUM"     , "MPC"       , 3f     , .7f    , 300   , 2        , 5) ,
+            instrument( "ELECTRONIC" , "STRING"   , "guitar"    , 2f     , .11f   , 150   , .7f      , 5)
         ));
 
         /*
@@ -64,17 +65,55 @@ public class FakeDataInitializer {
         ));
 
 
+        // http://www.pakmusic.org/programs/private-lessons/instruments/
         Arrays.asList(
-            instrument("ACOUSTIC", "piano"),
-            instrument("ELECTRONIC", "keyboard"),
-            instrument("ACOUSTIC", "accordion"),
-            instrument("ACOUSTIC", "cello"),
-            instrument("ACOUSTIC", "bass"),
-            instrument("ACOUSTIC", "guitar"),
-            instrument("ELECTRONIC", "guitar"),
-            instrument("ACOUSTIC", "trumpet")
+            instrument("ACOUSTIC"   , "piano"     ),
+            instrument("ELECTRONIC" , "keyboard"  ),
+            instrument("ACOUSTIC"   , "accordion" ),
+            instrument("ACOUSTIC"   , "cello"     ),
+            instrument("ACOUSTIC"   , "bass"      ),
+            instrument("ACOUSTIC"   , "guitar"    ),
+            instrument("ELECTRONIC" , "guitar"    ),
+            instrument("ACOUSTIC"   , "trumpet"   ),
+            instrument("ACOUSTIC"   , "drumkit"   )
         ).stream()
-        .forEach(genreOfCode("jazz")::addCharacteristicInstruments);
+            .forEach(genreOfCode("jazz")::addCharacteristicInstruments);
+
+        Arrays.asList(
+            instrument("ACOUSTIC"   , "piano"     ),
+            instrument("ELECTRONIC" , "keyboard"  ),
+            instrument("ACOUSTIC"   , "accordion" ),
+            instrument("ACOUSTIC"   , "violin"    ),
+            instrument("ACOUSTIC"   , "viola"     ),
+            instrument("ACOUSTIC"   , "bass"      ),
+            instrument("ACOUSTIC"   , "guitar"    ),
+            instrument("ELECTRONIC" , "guitar"    ),
+            instrument("ACOUSTIC"   , "voice"     )
+        ).stream()
+            .forEach(genreOfCode("folk")::addCharacteristicInstruments);
+
+        Arrays.asList(
+            instrument("ACOUSTIC"   , "bass"      ),
+            instrument("ACOUSTIC"   , "guitar"    ),
+            instrument("ELECTRONIC" , "guitar"    ),
+            instrument("ACOUSTIC"   , "voice"     )
+        ).stream()
+            .forEach(genreOfCode("pop")::addCharacteristicInstruments);
+
+        Arrays.asList(
+            instrument("ACOUSTIC"   , "voice" )
+        ).stream()
+            .forEach(genreOfCode("a capella")::addCharacteristicInstruments);
+
+        Arrays.asList(
+            instrument("ACOUSTIC"   , "guitar" ),
+            instrument("ACOUSTIC"   , "bass" ),
+            instrument("ACOUSTIC"   , "voice" ),
+            instrument("ELECTRONIC" , "keyboard"  ),
+            instrument("ACOUSTIC"   , "trumpet"   ),
+            instrument("ACOUSTIC"   , "drumkit"   )
+        ).stream()
+            .forEach(genreOfCode("ska/raggae")::addCharacteristicInstruments);
     }
 
     private Instrument instrument(String category, String name) {
@@ -85,11 +124,11 @@ public class FakeDataInitializer {
         return genreRepository.findByCode(code);
     }
 
-    private Instrument instrument(String category, String king, String name, float weight, float volume, float price, float loudness, int requiredHoursOfPracticePerWeek) {
+    private Instrument instrument(String category, String kind, String name, float weight, float volume, float price, float loudness, int requiredHoursOfPracticePerWeek) {
         Instrument instrument = new Instrument();
         instrument.setName(name);
         instrument.setCategory(category);
-        instrument.setKind(king);
+        instrument.setKind(kind);
         instrument.setAverageWeight(weight);
         instrument.setAverageVolume(volume);
         instrument.setAverageLowEndPrice(price);

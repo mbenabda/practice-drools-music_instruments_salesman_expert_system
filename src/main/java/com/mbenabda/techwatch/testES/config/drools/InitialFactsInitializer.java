@@ -30,7 +30,7 @@ public class InitialFactsInitializer {
     public void init() {
         session.insert(new YouthLimitAge(LIMIT_AGE));
         session.insert(new LoudnessThreshold(.5f));
-        session.insert(new VolumeLimit(5000f));
+        session.insert(new VolumeLimit(4f));
 
         instrumentRepository.findAll().stream().forEach(session::insert);
 

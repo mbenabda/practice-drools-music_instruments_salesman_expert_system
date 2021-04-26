@@ -22,7 +22,7 @@
     <properties>
         <assertj-core.version>3.5.2</assertj-core.version>
         <awaitility.version>1.7.0</awaitility.version>
-        <commons-io.version>2.5</commons-io.version>
+        <commons-io.version>2.7</commons-io.version>
         <commons-lang.version>3.4</commons-lang.version>
         <drools.version>6.4.0.Final</drools.version>
         <frontend-maven-plugin.version>1.0</frontend-maven-plugin.version>
